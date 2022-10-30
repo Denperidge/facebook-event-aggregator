@@ -1,7 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "got": "^12.5.2",
-    "readline-sync": "^1.4.10"
-  }
-}
