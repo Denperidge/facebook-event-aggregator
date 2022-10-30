@@ -4,6 +4,7 @@ from pprint import pprint
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from time import sleep
@@ -12,6 +13,7 @@ from json import loads, dump
 from os import getenv, makedirs
 from os.path import realpath, join, abspath, dirname
 from dateutil import parser
+from sys import argv
 import re
 
 
@@ -116,7 +118,24 @@ if __name__ == "__main__":
     events_json = join(public_dir, "events.json")
     makedirs(public_dir, exist_ok=True)
     load_dotenv(env_file)
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+    # Much thanks to https://github.com/jsoma/selenium-github-actions
+    options = Options()
+    try:
+        if (argv[1] == "headless"):
+            headless_opts = [
+                "--headless",
+                "--disable-gpu",
+                "--window-size=1920,1200",
+                "--ignore-certificate-errors",
+                "--disable-extensions"
+            ]
+            for opt in headless_opts:
+                options.add_argument(opt)
+
+    except IndexError:
+        pass  # No arguments were passed
+
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 
 
     """ LOADING & PARSING PAGES FROM .ENV """
