@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from dotenv import load_dotenv
 from json import loads, dump
-from os import getenv
+from os import getenv, makedirs
 from os.path import realpath, join, abspath, dirname
 from dateutil import parser
 import re
@@ -76,14 +76,6 @@ class Event(object):
         self.url = url
 
 
-
-""" SETUP """
-# Load .env, install & set Selenium driver
-app_dir = realpath(dirname(__file__))
-env_file = abspath(join(app_dir, "../", ".env"))
-load_dotenv(env_file)
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-
 """ PARSING FUNCTIONS """
 def parse_page():
     event_container = driver.find_element(By.XPATH, """//div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div/div/div/div/div/div[3]""")
@@ -114,42 +106,54 @@ def parse_community():
 
         return event
 
+if __name__ == "__main__":
+    """ SETUP """
+    # Load .env, install & set Selenium driver
+    root_dir = abspath(join(realpath(dirname(__file__)), "../"))
+    env_file = join(root_dir, "app/", ".env")
+    public_dir = join(root_dir, "public/")
+    events_json = join(public_dir, "events.json")
+    makedirs(public_dir, exist_ok=True)
+    load_dotenv(env_file)
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
-""" LOADING & PARSING PAGES FROM .ENV """
-raw_pages = loads(getenv("pages"))
-pages = []
-for raw_page in raw_pages:
-    page_type = raw_page[0].lower().strip()
-    url = raw_page[1]
 
-    match page_type:
-        case "page":
-            func = parse_page
-        case "community":
-            func = parse_community
-        case _:  # Default
-            func = parse_page
-    
-    pages.append((func, url))
+    """ LOADING & PARSING PAGES FROM .ENV """
+    raw_pages = loads(getenv("pages"))
+    pages = []
+    for raw_page in raw_pages:
+        page_type = raw_page[0].lower().strip()
+        url = raw_page[1]
+
+        match page_type:
+            case "page":
+                func = parse_page
+            case "community":
+                func = parse_community
+            case _:  # Default
+                func = parse_page
         
+        pages.append((func, url))
+            
 
-""" RUNNING PARSE FUNCTIONS ON PAGES """
-events = []
-for page in pages:
-    driver.get(page[1])
-    sleep(5)
-    try:
-        events.append(page[0]().__dict__)  # __dict__ is to allow json dump
 
-    except NoSuchElementException:
-        print("No events found for " + page[1])
+    """ RUNNING PARSE FUNCTIONS ON PAGES """
+    events = []
+    for page in pages:
+        driver.get(page[1])
+        sleep(5)
+        try:
+            events.append(page[0]().__dict__)  # __dict__ is to allow json dump
 
-    except Exception as e:
-        print("Error")
-        pprint(e)
+        except NoSuchElementException:
+            print("No events found for " + page[1])
 
-""" CLEANUP """
-with open("events.json", "w") as file:
-    dump(events, file)
-driver.quit()
-        
+        except Exception as e:
+            print("Error")
+            pprint(e)
+
+    """ CLEANUP """
+    with open(events_json, "w") as file:
+        dump(events, file)
+    driver.quit()
+            
