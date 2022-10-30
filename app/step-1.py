@@ -110,7 +110,7 @@ if __name__ == "__main__":
     """ SETUP """
     # Load .env, install & set Selenium driver
     root_dir = abspath(join(realpath(dirname(__file__)), "../"))
-    env_file = join(root_dir, "app/", ".env")
+    env_file = join(root_dir, ".env")
     public_dir = join(root_dir, "public/")
     events_json = join(public_dir, "events.json")
     makedirs(public_dir, exist_ok=True)
