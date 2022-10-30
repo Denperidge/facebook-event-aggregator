@@ -23,4 +23,4 @@ pip install -r requirements.txt
 ## Contributing
 
 Make sure to run `pipreqs` following command if any modules get added to a python file.
-
+(Note: pipreqs seems to have some issues with the match statement. If that's still the case, comment those lines out before running)
