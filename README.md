@@ -12,6 +12,8 @@ For more in depth or WIP notes, see [dev-notes](dev-notes.md)
     2. A .ical link
 4. 
 
+## Maintaining
+This application is made to be as platform-agnostic as possible. However, the weak link is in the Facebook scraping. The parse_* functions in [step-1.py](app/step-1.py) are most likely to need changes. So if the application doesn't find any events, look there first.
 
 
 ## Installing
