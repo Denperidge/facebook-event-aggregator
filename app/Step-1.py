@@ -1,17 +1,23 @@
-from facebook_scraper import get_posts
+""" IMPORTS """
 from pprint import pprint
-from bs4 import BeautifulSoup
-from requests import get
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from time import sleep
+from dotenv import load_dotenv
+from json import loads
+from os import getenv
+from os.path import realpath, join, abspath, dirname
 
+""" SETUP """
+# Load .env, install & set Selenium driver
+app_dir = realpath(dirname(__file__))
+env_file = abspath(join(app_dir, "../", ".env"))
+load_dotenv(env_file)
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
-
-
+""" PARSING FUNCTIONS """
 def parse_page():
     event_container = driver.find_element(By.XPATH, """//div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div/div/div/div/div/div[3]""")
     events = event_container.find_elements(By.XPATH, "*")
@@ -29,26 +35,39 @@ def parse_community():
         print()
 
 
-pages = [
-    (parse_page, "https://www.facebook.com/ID/upcoming_hosted_events"),
-    (parse_community, "https://www.facebook.com/ID/events/?ref=page_internal")
-]
+print(getenv("pages"))
+""" LOADING & PARSING PAGES FROM .ENV """
+raw_pages = loads(getenv("pages"))
+print(raw_pages)
+pages = []
+for raw_page in raw_pages:
+    type = raw_page[0].lower().strip()
+    url = raw_page[1]
+
+    match type:
+        case "page":
+            func = parse_page
+        case "community":
+            func = parse_community
+        case _:  # Default
+            func = parse_page
+    
+    pages.append((func, url))
+        
 
 
+""" RUNNING PARSE FUNCTIONS ON PAGES """
 for page in pages:
     print(page[1])
-    #soup = BeautifulSoup(get(page[1]).content, "html.parser")
     driver.get(page[1])
     sleep(5)
-
     try:
         page[0]()
 
-
-        #print(list(soup.find("img").parents)[2])
     except Exception as e:
         print("Error")
         pprint(e)
 
+""" CLEANUP """
 driver.quit()
         
