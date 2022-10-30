@@ -1,4 +1,5 @@
 """ IMPORTS """
+from datetime import date
 from pprint import pprint
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -10,6 +11,70 @@ from dotenv import load_dotenv
 from json import loads
 from os import getenv
 from os.path import realpath, join, abspath, dirname
+from dateutil import parser
+import re
+
+
+""" REGEX """
+# These are for parsing the scraping.
+
+
+"""
+Example:
+    NOV
+    11
+    Text
+
+    Returns: 
+        Nov
+        11
+"""
+re_three_letter_two_digit_date = r"^[a-zA-Z]{3}\W\d{1,2}$"
+
+"""
+Example:
+    Fri 19:00 UTC+01 · 84 guests
+
+    returns: Fri 19:00 UTC+01
+"""
+re_utc_time = r".*UTC\+\d{2}"
+
+"""
+Example:
+    NOV
+    19
+    Name - 32 guests
+
+    Returns: Name - 32 guests 
+"""
+re_guests = r".*guest.*"
+
+# Matches any line with 1 or more characters
+re_line_with_characters = r"^.{1,}$"
+
+
+
+def find_and_remove(data, pattern):
+    found = re.search(pattern, data, flags=re.MULTILINE).group()
+    data = data.replace(found, "")
+    return data, found
+
+
+""" CLASS """
+class Event:
+    """
+    name = str
+    datetime = date
+    url = str
+    """
+
+
+    def __init__(self, name, datetime, location, url=""):
+        self.name = name
+        self.datetime = parser.parse(datetime)
+        self.location = location
+        self.url = url
+
 
 """ SETUP """
 # Load .env, install & set Selenium driver
@@ -32,8 +97,26 @@ def parse_community():
     events = event_container.find_elements(By.TAG_NAME, "tr")
     for event in events:
         print("Detected upcoming event in {}!".format("community"))
-        print(event.text)
-        print()
+        raw_data = event.text
+
+
+        (raw_data, date) = find_and_remove(raw_data, re_three_letter_two_digit_date)
+
+        (raw_data, time) = find_and_remove(raw_data, re_utc_time)
+
+        (raw_data, guests) = find_and_remove(raw_data, re_guests)  # Unused
+
+        (raw_data, name) = find_and_remove(raw_data, re_line_with_characters)
+
+
+        datetime = date + " " + time
+        location = raw_data.replace("\n", " ").strip()
+
+        event = Event(name, datetime, location)
+
+
+
+        print(event)
 
 
 """ LOADING & PARSING PAGES FROM .ENV """
