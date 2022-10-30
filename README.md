@@ -5,12 +5,11 @@ A Facebook event scraper & aggregator, that displays multiple groups' events in 
 ## Structure
 For more in depth or WIP notes, see [dev-notes](dev-notes.md)
 
-1. Scrape the information from Facebook.
-2. Parse that data into JSON.
-3. Run a script that turns the JSON data into...
+1. `step-1.py` Scrapes the information from Facebook and turns that data into JSON.
+2. `step-2.js` Turns the JSON data into...
     1. A static website
     2. A .ical link
-4. 
+3. 
 
 ## Maintaining
 This application is made to be as platform-agnostic as possible. However, the weak link is in the Facebook scraping. The parse_* functions in [step-1.py](app/step-1.py) are most likely to need changes. So if the application doesn't find any events, look there first.
