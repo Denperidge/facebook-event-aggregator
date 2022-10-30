@@ -8,7 +8,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from time import sleep
 from dotenv import load_dotenv
-from json import loads
+from json import loads, dump
 from os import getenv
 from os.path import realpath, join, abspath, dirname
 from dateutil import parser
@@ -61,7 +61,7 @@ def find_and_remove(data, pattern):
 
 
 """ CLASS """
-class Event:
+class Event(object):
     """
     name = str
     datetime = date
@@ -71,9 +71,10 @@ class Event:
 
     def __init__(self, name, datetime, location, url=""):
         self.name = name
-        self.datetime = parser.parse(datetime)
+        self.datetime = parser.parse(datetime).isoformat()
         self.location = location
         self.url = url
+
 
 
 """ SETUP """
@@ -99,24 +100,19 @@ def parse_community():
         print("Detected upcoming event in {}!".format("community"))
         raw_data = event.text
 
-
         (raw_data, date) = find_and_remove(raw_data, re_three_letter_two_digit_date)
-
         (raw_data, time) = find_and_remove(raw_data, re_utc_time)
-
         (raw_data, guests) = find_and_remove(raw_data, re_guests)  # Unused
-
         (raw_data, name) = find_and_remove(raw_data, re_line_with_characters)
-
 
         datetime = date + " " + time
         location = raw_data.replace("\n", " ").strip()
 
         event = Event(name, datetime, location)
 
+        print(event.location)
 
-
-        print(event)
+        return event
 
 
 """ LOADING & PARSING PAGES FROM .ENV """
@@ -138,11 +134,12 @@ for raw_page in raw_pages:
         
 
 """ RUNNING PARSE FUNCTIONS ON PAGES """
+events = []
 for page in pages:
     driver.get(page[1])
     sleep(5)
     try:
-        page[0]()
+        events.append(page[0]().__dict__)  # __dict__ is to allow json dump
 
     except NoSuchElementException:
         print("No events found for " + page[1])
@@ -152,5 +149,7 @@ for page in pages:
         pprint(e)
 
 """ CLEANUP """
+with open("events.json", "w") as file:
+    dump(events, file)
 driver.quit()
         
