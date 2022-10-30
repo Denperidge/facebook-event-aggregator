@@ -118,6 +118,7 @@ if __name__ == "__main__":
     events_json = join(public_dir, "events.json")
     makedirs(public_dir, exist_ok=True)
     load_dotenv(env_file)
+    page_load_time = 5
     # Much thanks to https://github.com/jsoma/selenium-github-actions
     options = Options()
     try:
@@ -131,6 +132,7 @@ if __name__ == "__main__":
             ]
             for opt in headless_opts:
                 options.add_argument(opt)
+            page_load_time = 25
 
     except IndexError:
         pass  # No arguments were passed
@@ -161,7 +163,7 @@ if __name__ == "__main__":
     events = []
     for page in pages:
         driver.get(page[1])
-        sleep(5)
+        sleep(page_load_time)
         try:
             events.append(page[0]().__dict__)  # __dict__ is to allow json dump
 
