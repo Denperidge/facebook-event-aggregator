@@ -21,6 +21,10 @@ pip install -r requirements.txt
 
 ```
 
+## Configuring
+- If run locally, set the pages you want to scrape in .env. An example file is provided in [.env.example]!
+- If run on GitHub Actions, set a secret called "pages" in the repositories secrets, with for the rest the same value as you'd do in the local .env
+
 ## Contributing
 
 Make sure to run `pipreqs` following command if any modules get added to a python file.
