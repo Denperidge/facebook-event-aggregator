@@ -89,6 +89,7 @@ def parse_page():
         print()
 
 def parse_community():
+    print(driver.find_element(By.TAG_NAME,"body").text)
     event_container = driver.find_element(By.ID, "upcoming_events_card").find_element(By.TAG_NAME, "table")
     events = event_container.find_elements(By.TAG_NAME, "tr")
     for event in events:
@@ -132,7 +133,7 @@ if __name__ == "__main__":
             ]
             for opt in headless_opts:
                 options.add_argument(opt)
-            page_load_time = 25
+            page_load_time = 10
 
     except IndexError:
         pass  # No arguments were passed
