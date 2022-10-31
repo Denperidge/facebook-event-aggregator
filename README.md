@@ -6,10 +6,12 @@ A Facebook event scraper & aggregator, that displays multiple groups' events in 
 For more in depth or WIP notes, see [dev-notes](dev-notes.md)
 
 1. `step-1.py` Scrapes the information from Facebook and turns that data into JSON.
-2. `step-2.js` Turns the JSON data into...
+2. `step-2.py` Turns the JSON data into...
     1. A static website
     2. A .ical link
-3. 
+3. `step-3.py` Uploads the data to GitHub Pages
+
+This is all done locally, as to avoid the login sequence that Facebook asks when this is run from GitHub Actions (presumably due to rate limiting). The non-logged in Facebook interface is easier to scrape, presumably due to GraphQL (although that might be incorrect).
 
 ## Maintaining
 This application is made to be as platform-agnostic as possible. However, the weak link is in the Facebook scraping. The parse_* functions in [step-1.py](app/step-1.py) are most likely to need changes. So if the application doesn't find any events, look there first.
