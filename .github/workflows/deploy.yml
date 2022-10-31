@@ -43,6 +43,8 @@ jobs:
     - name: Scrape & parse pages
       env:
         pages: ${{ secrets.pages }}
+        facebook_email: ${{ secrest.facebook_email }}
+        facebook_password: ${{ secrest.facebook_password }}
       run: python app/step-1.py headless
     
     - name: Generate ICS
