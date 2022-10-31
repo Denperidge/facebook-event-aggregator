@@ -1,5 +1,6 @@
 """ IMPORTS """
 from datetime import date
+from operator import truediv
 from pprint import pprint
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -14,6 +15,7 @@ from os import getenv, makedirs
 from os.path import realpath, join, abspath, dirname
 from dateutil import parser
 from sys import argv
+from getpass import getpass
 import re
 
 
@@ -110,6 +112,15 @@ def parse_community():
 
         return event
 
+
+def handle_fb_login(email, password):
+    driver.get("https://www.facebook.com/login")
+    driver.find_element(By.ID, "email").send_keys(email)
+    driver.find_element(By.ID, "pass").send_keys(password)
+    driver.find_element(By.TAG_NAME, "form").submit()
+    sleep(5)
+
+
 if __name__ == "__main__":
     """ SETUP """
     # Load .env, install & set Selenium driver
@@ -124,6 +135,7 @@ if __name__ == "__main__":
     options = Options()
     try:
         if (argv[1] == "headless"):
+            headless = True
             headless_opts = [
                 "--headless",
                 "--disable-gpu",
@@ -134,9 +146,11 @@ if __name__ == "__main__":
             for opt in headless_opts:
                 options.add_argument(opt)
             page_load_time = 10
+        else:
+            headless = False
 
     except IndexError:
-        pass  # No arguments were passed
+        headless = False  # No arguments were passed, assume not headless
 
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 
@@ -157,7 +171,27 @@ if __name__ == "__main__":
                 func = parse_page
         
         pages.append((func, url))
-            
+    
+    # If an email is provided, log into Facebook
+    if getenv("facebook_email") is not None:
+        facebook_email = getenv("facebook_email")
+        print("Facebook email passed...")
+        # Password provided, use that
+        if getenv("facebook_password") is not None:
+            print("... and a password. Using that to login.")
+            facebook_password = getenv("facebook_password")
+            handle_fb_login(facebook_email, facebook_password)
+
+        # No password provided, but running interactively, so prompt
+        elif not headless:
+            print("... but no password. Please enter it in the following prompt:")
+            facebook_password = getpass()
+            handle_fb_login(facebook_email, facebook_password)
+        
+        # No password provided, but running headless, so quit
+        else:
+            print("Email was passed, but no password in headless mode. Skipping login")    
+
 
 
     """ RUNNING PARSE FUNCTIONS ON PAGES """
