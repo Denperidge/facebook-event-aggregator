@@ -82,7 +82,7 @@ class Event(object):
 
 
 """ PARSING FUNCTIONS """
-def parse_page():
+def parse_page(logged_in):
     event_container = driver.find_element(By.XPATH, """//div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div/div/div/div/div/div[3]""")
     events = event_container.find_elements(By.XPATH, "*")
     for event in events:
@@ -90,10 +90,16 @@ def parse_page():
         print(event.text)
         print()
 
-def parse_community():
+def parse_community(logged_in):
     print(driver.find_element(By.TAG_NAME,"body").text)
-    event_container = driver.find_element(By.ID, "upcoming_events_card").find_element(By.TAG_NAME, "table")
-    events = event_container.find_elements(By.TAG_NAME, "tr")
+    
+    if not logged_in:
+        event_container = driver.find_element(By.ID, "upcoming_events_card").find_element(By.TAG_NAME, "table")
+        events = event_container.find_elements(By.TAG_NAME, "tr")
+    else:
+        events = driver.find_elements(By.XPATH, """//div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[4]/div/div/div[1]/div/div/div/*""")
+        events.pop(0)  # First element is title
+
     for event in events:
         print("Detected upcoming event in {}!".format("community"))
         raw_data = event.text
@@ -173,6 +179,7 @@ if __name__ == "__main__":
         pages.append((func, url))
     
     # If an email is provided, log into Facebook
+    logged_in = False
     if getenv("facebook_email") is not None:
         facebook_email = getenv("facebook_email")
         print("Facebook email passed...")
@@ -181,12 +188,14 @@ if __name__ == "__main__":
             print("... and a password. Using that to login.")
             facebook_password = getenv("facebook_password")
             handle_fb_login(facebook_email, facebook_password)
+            logged_in = True
 
         # No password provided, but running interactively, so prompt
         elif not headless:
             print("... but no password. Please enter it in the following prompt:")
             facebook_password = getpass()
             handle_fb_login(facebook_email, facebook_password)
+            logged_in = True
         
         # No password provided, but running headless, so quit
         else:
@@ -200,7 +209,7 @@ if __name__ == "__main__":
         driver.get(page[1])
         sleep(page_load_time)
         try:
-            events.append(page[0]().__dict__)  # __dict__ is to allow json dump
+            events.append(page[0](logged_in).__dict__)  # __dict__ is to allow json dump
 
         except NoSuchElementException:
             print("No events found for " + page[1])
