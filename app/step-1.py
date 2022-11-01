@@ -36,7 +36,7 @@ if __name__ == "__main__":
         headless = True
     driver = setup_driver(headless)
 
-    handle_fb_login(headless)
+    logged_in = handle_fb_login(headless)
  
     """ LOADING & PARSING PAGES FROM .ENV """
     raw_pages = loads(getenv("pages"))
