@@ -10,10 +10,9 @@ from dotenv import load_dotenv
 from json import loads, dump
 from os import getenv, makedirs
 from os.path import realpath, join, abspath, dirname
-from dateutil import parser
 from sys import argv
 from getpass import getpass
-from repo import init_repo_if_not_exists, update_repo
+from repo import init_repo_if_not_exists
 
 
 

@@ -1,4 +1,5 @@
-""" CLASS """
+from dateutil import parser
+
 class Event(object):
     """
     name = str
