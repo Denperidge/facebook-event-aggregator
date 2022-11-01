@@ -72,7 +72,7 @@ def scrape_events(driver, pages, logged_in):
         driver.get(page[1])
         sleep(5)
         try:
-            events.append(page[0](logged_in).__dict__)  # __dict__ is to allow json dump
+            events.append(page[0](driver, logged_in).__dict__)  # __dict__ is to allow json dump
 
         except NoSuchElementException:
             print("No events found for " + page[1])

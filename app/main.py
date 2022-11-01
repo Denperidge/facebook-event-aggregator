@@ -1,12 +1,8 @@
 """ IMPORTS """
-from datetime import date
-from operator import truediv
-from pprint import pprint
-from app.scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
+from scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
 from scrape_and_parse.driver import setup_driver
 from scrape_and_parse.fb_login import handle_fb_login
 
-from time import sleep
 from dotenv import load_dotenv
 from json import dump
 from os import makedirs
@@ -27,8 +23,11 @@ if __name__ == "__main__":
     # Load .env file and startup params
     load_dotenv(env_file)
     headless = False
-    if (argv[1] == "headless"):
-        headless = True
+    try:
+        if (argv[1] == "headless"):
+            headless = True
+    except IndexError:
+        pass
     page_load_time = 5
     pages = read_pages_from_env()
 
