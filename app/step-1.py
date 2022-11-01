@@ -6,6 +6,7 @@ from scrape_and_parse.driver import setup_driver
 from scrape_and_parse.fb_login import handle_fb_login
 from selenium.common.exceptions import NoSuchElementException
 
+from scrape_and_parse.scrape_and_parse import parse_page, parse_community
 from time import sleep
 from dotenv import load_dotenv
 from json import loads, dump
@@ -14,30 +15,7 @@ from os.path import realpath, join, abspath, dirname
 from sys import argv
 from repo import init_repo_if_not_exists
 
-
-
-if __name__ == "__main__":
-    """ SETUP """
-    # Load .env, install & set Selenium driver
-    root_dir = abspath(join(realpath(dirname(__file__)), "../"))
-    env_file = join(root_dir, ".env")
-    public_dir = join(root_dir, "public/")
-
-    init_repo_if_not_exists(public_dir)
-
-    events_json = join(public_dir, "events.json")
-    makedirs(public_dir, exist_ok=True)
-    load_dotenv(env_file)
-    page_load_time = 5
-    # Much thanks to https://github.com/jsoma/selenium-github-actions
-
-    headless = False
-    if (argv[1] == "headless"):
-        headless = True
-    driver = setup_driver(headless)
-
-    logged_in = handle_fb_login(headless)
- 
+def read_pages_from_env():
     """ LOADING & PARSING PAGES FROM .ENV """
     raw_pages = loads(getenv("pages"))
     pages = []
@@ -54,6 +32,33 @@ if __name__ == "__main__":
                 func = parse_page
         
         pages.append((func, url))
+    return pages
+
+
+if __name__ == "__main__":
+    """ SETUP """
+    # Define absolute path variables
+    root_dir = abspath(join(realpath(dirname(__file__)), "../"))
+    env_file = join(root_dir, ".env")
+    public_dir = join(root_dir, "public/")
+    events_json = join(public_dir, "events.json")
+
+    # Load .env file and startup params
+    load_dotenv(env_file)
+    headless = False
+    if (argv[1] == "headless"):
+        headless = True
+    page_load_time = 5
+    
+    # Create public/ repo
+    makedirs(public_dir, exist_ok=True)
+    init_repo_if_not_exists(public_dir)
+
+    # Setup Selenium scraper
+    driver = setup_driver(headless)
+    logged_in = handle_fb_login(driver, headless)
+
+    pages = read_pages_from_env()
     
 
     """ RUNNING PARSE FUNCTIONS ON PAGES """
