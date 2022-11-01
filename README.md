@@ -27,7 +27,7 @@ echo "Run app/main.py once in case the output repo hasn't been set up yet"
 echo "Command example: python3 $(pwd)/app/main.py"
 echo ""
 echo "Optionally, add the following line to crontab to automatically run every 24 hours (can be modified ofcourse): "
-echo "0 5 * * * python3 \"$(pwd/app/main.py\" headless"
+echo "0 5 * * * python3 \"$(pwd)/app/main.py\" headless"
 ```
 See also [crontab guru](https://crontab.guru/)!
 
