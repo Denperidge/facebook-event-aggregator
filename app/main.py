@@ -23,13 +23,10 @@ if __name__ == "__main__":
     events_json = join(public_dir, "events.json")
 
     # Load .env file and startup params
+    startup_args = [arg.lower() for arg in argv]
+    headless = "headless" in startup_args
+
     load_dotenv(env_file)
-    headless = False
-    try:
-        if (argv[1] == "headless"):
-            headless = True
-    except IndexError:
-        pass
     pages = read_pages_from_env()
 
     
