@@ -3,7 +3,7 @@ from os import getenv
 from getpass import getpass
 from selenium.webdriver.common.by import By
 
-def handle_fb_login(headless):
+def handle_fb_login(driver, headless):
     # If an email is provided, log into Facebook
     logged_in = False
     if getenv("facebook_email") is not None:
@@ -13,14 +13,14 @@ def handle_fb_login(headless):
         if getenv("facebook_password") is not None:
             print("... and a password. Using that to login.")
             facebook_password = getenv("facebook_password")
-            handle_fb_login(facebook_email, facebook_password)
+            login(driver, facebook_email, facebook_password)
             logged_in = True
 
         # No password provided, but running interactively, so prompt
         elif not headless:
             print("... but no password. Please enter it in the following prompt:")
             facebook_password = getpass()
-            handle_fb_login(facebook_email, facebook_password)
+            login(driver, facebook_email, facebook_password)
             logged_in = True
         
         # No password provided, but running headless, so quit
