@@ -80,3 +80,4 @@ def scrape_events(driver, pages, logged_in):
         except Exception as e:
             print("Error")
             print(e)
+    return events
