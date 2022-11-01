@@ -1,6 +1,6 @@
 # Sociaalisme
 
-A Facebook event scraper & aggregator, that displays multiple groups' events in a website and .ics file. Without needing a back-end!
+A Facebook event scraper & aggregator, that displays multiple groups' events in a static website and .ics file.
 
 ## Structure
 For more in depth or WIP notes, see [dev-notes](dev-notes.md)
