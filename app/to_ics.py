@@ -4,6 +4,7 @@ from os import makedirs
 from os.path import abspath, join, realpath, dirname
 from dotenv import load_dotenv
 from dateutil import parser
+from repo import update_repo
 
 
 root_dir = abspath(join(realpath(dirname(__file__)), "../"))
@@ -29,3 +30,5 @@ for raw_event in events:
 
 with open(all_ics, "w") as file:
     file.writelines(calendar.serialize_iter())
+
+update_repo(public_dir)

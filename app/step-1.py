@@ -17,6 +17,7 @@ from dateutil import parser
 from sys import argv
 from getpass import getpass
 import re
+from repo import init_repo_if_not_exists, update_repo
 
 
 """ REGEX """
@@ -133,6 +134,9 @@ if __name__ == "__main__":
     root_dir = abspath(join(realpath(dirname(__file__)), "../"))
     env_file = join(root_dir, ".env")
     public_dir = join(root_dir, "public/")
+
+    init_repo_if_not_exists(public_dir)
+
     events_json = join(public_dir, "events.json")
     makedirs(public_dir, exist_ok=True)
     load_dotenv(env_file)
