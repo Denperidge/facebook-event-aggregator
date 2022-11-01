@@ -2,12 +2,9 @@
 from datetime import date
 from operator import truediv
 from pprint import pprint
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
+from scrape_and_parse.driver import setup_driver
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.by import By
+
 from time import sleep
 from dotenv import load_dotenv
 from json import loads, dump
@@ -127,29 +124,12 @@ if __name__ == "__main__":
     load_dotenv(env_file)
     page_load_time = 5
     # Much thanks to https://github.com/jsoma/selenium-github-actions
-    options = Options()
-    try:
-        if (argv[1] == "headless"):
-            headless = True
-            headless_opts = [
-                "--headless",
-                "--disable-gpu",
-                "--window-size=1920,1200",
-                "--ignore-certificate-errors",
-                "--disable-extensions"
-            ]
-            for opt in headless_opts:
-                options.add_argument(opt)
-            page_load_time = 10
-        else:
-            headless = False
 
-    except IndexError:
-        headless = False  # No arguments were passed, assume not headless
-
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
-
-
+    headless = False
+    if (argv[1] == "headless"):
+        headless = True
+    driver = setup_driver(headless)
+ 
     """ LOADING & PARSING PAGES FROM .ENV """
     raw_pages = loads(getenv("pages"))
     pages = []
