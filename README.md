@@ -18,10 +18,18 @@ This application is made to be as platform-agnostic as possible. However, the we
 
 
 ## Installing
+Prerequisites: >= py3.10, pip, git
 ```bash
+git clone https://github.com/Denperidge/facebook-event-aggregator.git
+cd facebook-event-aggregator
 pip install -r requirements.txt
-
+echo "Run app/main.py once in case the output repo hasn't been set up yet"
+echo "Command example: python3 $(pwd)/app/main.py"
+echo ""
+echo "Optionally, add the following line to crontab to automatically run every 24 hours (can be modified ofcourse): "
+echo "0 5 * * * python3 \"$(pwd/app/main.py\" headless"
 ```
+See also [crontab guru](https://crontab.guru/)!
 
 ## Configuring
 - If run locally, set the pages you want to scrape in .env. An example file is provided in [.env.example]!
