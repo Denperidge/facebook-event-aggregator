@@ -12,7 +12,7 @@ from repo import init_repo_if_not_exists
 from scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
 from scrape_and_parse.driver import setup_driver
 from scrape_and_parse.fb_login import handle_fb_login
-from app.to_ics import events_to_ics
+from export.to_ics import events_to_ics
 
 
 if __name__ == "__main__":
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     # Export
     with open(events_json, "w") as file:
         dump(events, file)
-    events_to_ics(events)
+    events_to_ics(events, public_dir)
 
 
     # Cleanup

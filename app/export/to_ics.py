@@ -1,6 +1,6 @@
 # Built-in imports
 from sys import argv
-from os.path import realpath, dirname
+from os.path import realpath, dirname, join
 from json import load
 
 # Package imports
@@ -10,7 +10,10 @@ from ics import Calendar, Event
 # Local imports
 from repo import update_repo
 
-def events_to_ics(events, dest):
+def events_to_ics(events, output_dir):
+    output_dir = realpath(output_dir)
+    ics_all = join(output_dir, "all.ics")
+
     calendar = Calendar()
     for raw_event in events:
         event = Event()
@@ -20,8 +23,9 @@ def events_to_ics(events, dest):
         event.url = raw_event["url"]
 
         calendar.events.add(event)
+        
 
-    with open(dest, "w") as file:
+    with open(ics_all, "w") as file:
         file.writelines(calendar.serialize_iter())
 
 
@@ -33,5 +37,7 @@ if __name__ == "__main__":
 
     with open(events_json, "r") as file:
         events = load(file)
+    
+    events_to_ics(events)
 
     update_repo(dir)
