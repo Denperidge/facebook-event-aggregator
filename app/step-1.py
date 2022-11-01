@@ -18,7 +18,7 @@ from sys import argv
 from getpass import getpass
 import re
 from repo import init_repo_if_not_exists, update_repo
-from event import Event
+from Event import Event
 
 
 """ REGEX """
