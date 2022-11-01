@@ -46,8 +46,8 @@ if __name__ == "__main__":
     with open(events_json, "w") as file:
         dump(events, file)
     events_to_ics(events)
-    
 
-    # Cleanip
+
+    # Cleanup
     driver.quit()
             
