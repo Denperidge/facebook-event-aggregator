@@ -1,39 +1,37 @@
 # Built-in imports
-from os import makedirs
-from os.path import abspath, join, realpath, dirname
+from sys import argv
+from os.path import realpath, dirname
 from json import load
 
 # Package imports
-from dotenv import load_dotenv
 from dateutil import parser
 from ics import Calendar, Event
 
 # Local imports
 from repo import update_repo
 
+def events_to_ics(events, dest):
+    calendar = Calendar()
+    for raw_event in events:
+        event = Event()
+        event.name = raw_event["name"]
+        event.begin = parser.parse(raw_event["datetime"])
+        event.location = raw_event["location"]
+        event.url = raw_event["url"]
 
-root_dir = abspath(join(realpath(dirname(__file__)), "../"))
-env_file = join(root_dir, ".env")
-public_dir = join(root_dir, "public/")
-events_json = join(public_dir, "events.json")
-all_ics = join(public_dir, "all.ics")
-makedirs(public_dir, exist_ok=True)
-load_dotenv(env_file)
+        calendar.events.add(event)
 
-with open(events_json, "r") as file:
-    events = load(file)
+    with open(dest, "w") as file:
+        file.writelines(calendar.serialize_iter())
 
-calendar = Calendar()
-for raw_event in events:
-    event = Event()
-    event.name = raw_event["name"]
-    event.begin = parser.parse(raw_event["datetime"])
-    event.location = raw_event["location"]
-    event.url = raw_event["url"]
 
-    calendar.events.add(event)
+# For testing:
+# - python to_ics.py path/to/events.json
+if __name__ == "__main__":
+    events_json = realpath(argv[1])
+    dir = dirname(events_json)
 
-with open(all_ics, "w") as file:
-    file.writelines(calendar.serialize_iter())
+    with open(events_json, "r") as file:
+        events = load(file)
 
-update_repo(public_dir)
+    update_repo(dir)
