@@ -1,5 +1,6 @@
+# Built-in imports
 import re
-# These are for parsing the scraping :tm:
+# These functions are for parsing the scraping :tm:
 
 """
 Example:
@@ -34,10 +35,7 @@ re_guests = r".*guest.*"
 # Matches any line with 1 or more characters
 re_line_with_characters = r"^.{1,}$"
 
-
-
 def find_and_remove(data, pattern):
     found = re.search(pattern, data, flags=re.MULTILINE).group()
     data = data.replace(found, "")
     return data, found
-

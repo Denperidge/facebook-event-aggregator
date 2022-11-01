@@ -1,11 +1,15 @@
-from .regex import find_and_remove, re_line_with_characters, re_guests, re_three_letter_two_digit_date, re_utc_time
-from Event import Event
+# Built-in imports
+from os import getenv
+from time import sleep
+from json import loads
+
+# Package imports
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-from time import sleep
-from json import loads
-from os import getenv
+# Local imports
+from .regex import find_and_remove, re_line_with_characters, re_guests, re_three_letter_two_digit_date, re_utc_time
+from Event import Event
 
 """ PARSING FUNCTIONS """
 def parse_page(driver, logged_in):

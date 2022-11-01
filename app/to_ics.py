@@ -1,9 +1,14 @@
-from ics import Calendar, Event
-from json import load
+# Built-in imports
 from os import makedirs
 from os.path import abspath, join, realpath, dirname
+from json import load
+
+# Package imports
 from dotenv import load_dotenv
 from dateutil import parser
+from ics import Calendar, Event
+
+# Local imports
 from repo import update_repo
 
 

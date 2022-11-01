@@ -1,12 +1,10 @@
-from os import getenv
-
+# Package imports
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Setup Driver   
-# 
+# Setup Driver
 def setup_driver(headless=False):
     options = Options()
 

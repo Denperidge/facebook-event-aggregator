@@ -1,6 +1,9 @@
-from time import sleep
+# Built-in imports
 from os import getenv
+from time import sleep
 from getpass import getpass
+
+# Package imports
 from selenium.webdriver.common.by import By
 
 def handle_fb_login(driver, headless):

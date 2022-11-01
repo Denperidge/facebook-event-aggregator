@@ -1,9 +1,12 @@
-# This module handles Git repo initialisating
-from os.path import realpath, isdir, join
+# Built-in imports
 from subprocess import run
+from os.path import realpath, isdir, join
 from datetime import datetime
 
 """
+This module handles Git repo initialisating
+
+
 GitPython is not used because:
 - It still requires an active Git installation
 - Currently in maintenance mode

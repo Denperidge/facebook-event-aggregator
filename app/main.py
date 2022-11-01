@@ -1,15 +1,17 @@
-""" IMPORTS """
+# Built-in imports
+from sys import argv
+from os import makedirs
+from os.path import realpath, join, abspath, dirname
+from json import dump
+
+# Package imports
+from dotenv import load_dotenv
+
+# Local imports
+from repo import init_repo_if_not_exists
 from scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
 from scrape_and_parse.driver import setup_driver
 from scrape_and_parse.fb_login import handle_fb_login
-
-from dotenv import load_dotenv
-from json import dump
-from os import makedirs
-from os.path import realpath, join, abspath, dirname
-from sys import argv
-from repo import init_repo_if_not_exists
-
 
 
 if __name__ == "__main__":
@@ -28,7 +30,6 @@ if __name__ == "__main__":
             headless = True
     except IndexError:
         pass
-    page_load_time = 5
     pages = read_pages_from_env()
 
     
