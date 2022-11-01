@@ -1,7 +1,11 @@
 from .regex import find_and_remove, re_line_with_characters, re_guests, re_three_letter_two_digit_date, re_utc_time
 from Event import Event
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
+
 from time import sleep
+from json import loads
+from os import getenv
 
 """ PARSING FUNCTIONS """
 def parse_page(driver, logged_in):
@@ -41,3 +45,38 @@ def parse_community(driver, logged_in):
         return event
 
 
+def read_pages_from_env():
+    """ LOADING & PARSING PAGES FROM .ENV """
+    raw_pages = loads(getenv("pages"))
+    pages = []
+    for raw_page in raw_pages:
+        page_type = raw_page[0].lower().strip()
+        url = raw_page[1]
+
+        match page_type:
+            case "page":
+                func = parse_page
+            case "community":
+                func = parse_community
+            case _:  # Default
+                func = parse_page
+        
+        pages.append((func, url))
+    return pages
+
+
+def scrape_events(driver, pages, logged_in):
+    """ RUNNING PARSE FUNCTIONS ON PAGES """
+    events = []
+    for page in pages:
+        driver.get(page[1])
+        sleep(5)
+        try:
+            events.append(page[0](logged_in).__dict__)  # __dict__ is to allow json dump
+
+        except NoSuchElementException:
+            print("No events found for " + page[1])
+
+        except Exception as e:
+            print("Error")
+            print(e)
