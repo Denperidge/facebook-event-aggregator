@@ -64,7 +64,10 @@ def read_pages_from_env():
                 func = parse_community
             case _:  # Default
                 func = parse_page
-        
+    
+        # Specify localisation
+        url = url.replace("www.facebook", "en-gb.facebook")
+
         pages.append((func, url))
     return pages
 
