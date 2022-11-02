@@ -78,10 +78,13 @@ def scrape_events(driver, pages, logged_in):
         try:
             events.append(page[0](driver, logged_in).__dict__)  # __dict__ is to allow json dump
 
-        except NoSuchElementException:
-            print("No events found for " + page[1])
+        except NoSuchElementException as e:
+            print("Error parsing {}".format(page[1]))
+            print("No events found.")
+            print(e)
 
         except Exception as e:
-            print("Error")
+            print("Error parsing {}".format(page[1]))
             print(e)
+
     return events
