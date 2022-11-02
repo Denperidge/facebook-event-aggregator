@@ -16,7 +16,7 @@ GitPython is not used because:
 # Commands meant for internal use
 def git_command(dir, *commands):
     for command in commands:
-        run("git {}".format(command), cwd=dir)
+        run("git {}".format(command), cwd=dir, shell=True)
 
 def normalize_path(dir):
     return realpath(dir)
