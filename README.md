@@ -19,6 +19,9 @@ This application is made to be as platform-agnostic as possible. However, the we
 
 ## Installing
 Prerequisites: >= py3.10, pip, git
+
+If running on a platform without an official Chromium distrubition (e.g. Raspberry Pi 3b, Linux32...): `apt-get install chromium-chromedriver`
+
 ```bash
 git clone https://github.com/Denperidge/facebook-event-aggregator.git
 cd facebook-event-aggregator
