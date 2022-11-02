@@ -8,7 +8,7 @@ from json import dump
 from dotenv import load_dotenv
 
 # Local imports
-from repo import init_repo_if_not_exists
+from repo import init_repo_if_not_exists, update_repo
 from scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
 from scrape_and_parse.driver import setup_driver
 from scrape_and_parse.fb_login import handle_fb_login
@@ -26,6 +26,7 @@ if __name__ == "__main__":
     # Load .env file and startup params
     startup_args = [arg.lower() for arg in argv]
     headless = "headless" in startup_args
+    update = "update" in startup_args
 
     load_dotenv(env_file)
     pages = read_pages_from_env()
@@ -46,6 +47,9 @@ if __name__ == "__main__":
     with open(events_json, "w") as file:
         dump(events, file)
     events_to_ics(events, public_dir)
+
+    if update:
+        update_repo(public_dir)
 
 
     # Cleanup

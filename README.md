@@ -27,13 +27,15 @@ echo "Run app/main.py once in case the output repo hasn't been set up yet"
 echo "Command example: python3 $(pwd)/app/main.py"
 echo ""
 echo "Optionally, add the following line to crontab to automatically run every 24 hours (can be modified ofcourse): "
-echo "0 5 * * * python3 \"$(pwd)/app/main.py\" headless"
+echo "0 5 * * * python3 \"$(pwd)/app/main.py\" headless update"
 ```
 See also [crontab guru](https://crontab.guru/)!
 
-## Configuring
-- If run locally, set the pages you want to scrape in .env. An example file is provided in [.env.example]!
-- If run on GitHub Actions, set a secret called "pages" in the repositories secrets, with for the rest the same value as you'd do in the local .env
+## Configuring/usage
+- Set the pages you want to scrape in .env. An example file is provided in [.env.example]!
+- Run using `python3 app/main.py`. Do this at least once before automating to set up Git repo URL.
+- Use the `headless` arg to run Selenium in the background and/or `update` to push data to the specified Git repo after finishing 
+
 
 ## Contributing
 
