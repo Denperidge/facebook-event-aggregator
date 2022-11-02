@@ -36,6 +36,11 @@ re_guests = r".*guest.*"
 re_line_with_characters = r"^.{1,}$"
 
 def find_and_remove(data, pattern):
-    found = re.search(pattern, data, flags=re.MULTILINE).group()
-    data = data.replace(found, "")
-    return data, found
+    try:
+        found = re.search(pattern, data, flags=re.MULTILINE).group()
+        data = data.replace(found, "")
+    except AttributeError as e:
+        print("Error during {0} Regex search".format(pattern))
+        found = ""
+    finally:
+        return data, found
