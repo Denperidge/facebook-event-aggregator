@@ -1,8 +1,8 @@
 # Package imports
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
+from webdriver_manager.firefox import GeckoDriverManager
 
 # Setup Driver
 def setup_driver(headless=False):
@@ -19,6 +19,6 @@ def setup_driver(headless=False):
         for opt in headless_opts:
             options.add_argument(opt)
 
-    return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+    return webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
 
 
