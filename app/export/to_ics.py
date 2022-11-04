@@ -18,7 +18,7 @@ def events_to_ics(events, output_dir):
     for raw_event in events:
         event = Event()
         event.name = raw_event["name"]
-        event.begin = parser.parse(raw_event["datetime"])
+        event.begin = raw_event["datetime"]
         event.location = raw_event["location"]
         event.url = raw_event["url"]
 

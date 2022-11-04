@@ -13,7 +13,7 @@ env = Environment(
     autoescape=True
 )
 
-def render_to_html(events, output_dir):
+def events_to_html(events, output_dir):
     template_index = env.get_template("index.html")
     
     output = template_index.render(events=events)
@@ -34,4 +34,4 @@ if __name__ == "__main__":
             print(event)
             event["datetime"] = parser.parse(event["datetime"])
 
-    render_to_html(events, dir)
+    events_to_html(events, dir)
