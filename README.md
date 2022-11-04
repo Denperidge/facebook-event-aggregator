@@ -37,7 +37,15 @@ See also [crontab guru](https://crontab.guru/)!
 ## Configuring/usage
 - Set the pages you want to scrape in .env. An example file is provided in [.env.example]!
 - Run using `python3 app/main.py`. Do this at least once before automating to set up Git repo URL.
-- Use the `headless` arg to run Selenium in the background and/or `update` to push data to the specified Git repo after finishing 
+- Use the `headless` arg to run Selenium in the background and/or `update` to push data to the specified Git repo after finishing
+
+<details>
+    <summary>Don't forget to configure Git on the device if that's not done already!</summary>
+    ```bash
+    git config --global user.email "you@example.com"
+    git config --global user.name "Your Name"
+    ``` 
+</details>
 
 
 ## Contributing

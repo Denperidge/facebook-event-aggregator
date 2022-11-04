@@ -38,6 +38,6 @@ if __name__ == "__main__":
     with open(events_json, "r") as file:
         events = load(file)
     
-    events_to_ics(events)
+    events_to_ics(events, dir)
 
     update_repo(dir)
