@@ -35,6 +35,18 @@ re_guests = r".*guest.*"
 # Matches any line with 1 or more characters
 re_line_with_characters = r"^.{1,}$"
 
+"""
+Example:
+    WED, 5 NOV AT 08:30 UTC+01 AND 1 MORE
+
+    Returns: UTC+01 AND 1 MORE
+
+"""
+re_utc_and_more = r"UTC\+\d* AND \d{1,} MORE"
+
+def regex_in(data, pattern):
+    return re.search(pattern, data)
+
 def find_and_remove(data, pattern):
     try:
         found = re.search(pattern, data, flags=re.MULTILINE).group()
