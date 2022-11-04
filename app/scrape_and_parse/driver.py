@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-from pyvirtualdisplay import Display
+#from pyvirtualdisplay import Display
 
 # Setup Driver
 def setup_driver(headless=False):
@@ -21,12 +21,12 @@ def setup_driver(headless=False):
             "--disable-extensions",
             #"--no-sandbox",
             #"--disable-dev-shm-usage",
-            "--remote-debugging-port=9515",
+            #"--remote-debugging-port=9515",
             #"--disable-setuid-sandbox"
         ]
         for opt in headless_opts:
             options.add_argument(opt)
-            print(opt)
+            #print(opt)
     
     # Much thanks to https://stackoverflow.com/a/71042821
     raspberry_pi = system() == "Linux" and machine() == "armv7l"
