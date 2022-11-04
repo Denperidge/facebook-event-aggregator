@@ -30,7 +30,7 @@ def init_repo_if_not_exists(dir):
         git_command(dir, "init")
 
         repo_url = input("Git repo URL: ")
-        git_command(dir, "remote add origin {}".format(repo_url))
+        git_command(dir, "clone {} .".format(repo_url))
 
         
     
