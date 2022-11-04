@@ -22,15 +22,12 @@ def normalize_path(dir):
     return realpath(dir)
 
 # Commands meant for external use
-def init_repo_if_not_exists(dir):
-    dir = normalize_path(dir)
+def clone_repo_if_not_exists(parent_dir, dest_dirname):
+    dest_dirname = normalize_path(join(parent_dir, dest_dirname))
 
-    dotgit = join(dir, ".git/")
-    if not isdir(dotgit):
-        git_command(dir, "init")
-
+    if not isdir(dest_dirname):
         repo_url = input("Git repo URL: ")
-        git_command(dir, "clone {} .".format(repo_url))
+        git_command(parent_dir, "clone {0} {1}".format(repo_url, dest_dirname))
 
         
     

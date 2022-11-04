@@ -8,7 +8,7 @@ from json import dump
 from dotenv import load_dotenv
 
 # Local imports
-from repo import init_repo_if_not_exists, update_repo
+from repo import clone_repo_if_not_exists, update_repo
 from scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
 from scrape_and_parse.driver import setup_driver
 from scrape_and_parse.fb_login import handle_fb_login
@@ -20,7 +20,8 @@ if __name__ == "__main__":
     # Define absolute path variables
     root_dir = abspath(join(realpath(dirname(__file__)), "../"))
     env_file = join(root_dir, ".env")
-    public_dir = join(root_dir, "public/")
+    public_dirname = "public/"
+    public_dir = join(root_dir, public_dirname)
     events_json = join(public_dir, "events.json")
 
     # Load .env file and startup params
@@ -32,9 +33,8 @@ if __name__ == "__main__":
     pages = read_pages_from_env()
 
     
-    # Create public/ repo
-    makedirs(public_dir, exist_ok=True)
-    init_repo_if_not_exists(public_dir)
+    # Clone repo into public/
+    clone_repo_if_not_exists(parent_dir=root_dir, dest_dirname=public_dirname)
 
     # Setup Selenium scraper
     driver = setup_driver(headless)
