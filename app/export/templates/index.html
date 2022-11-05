@@ -4,22 +4,24 @@
 {% block body %}
 <main>
     <h1>{{ title }}</h1>
-    <section id="events" class="grid">
+    <section>
         <h2>Events</h2>
-        {% for event in events %}
-        <article>
-            <h3>{{ event.name }}</h3>
-
-            {{ event.datetime.strftime("%H:%M %A %D") }}
-
-            {% if event.location %}
-            <span>{{ event.location }}</span>
-            {% endif %}
-            {% if event.url %}
-            <span>{{ event.url }}</span>
-            {% endif %}
-        </article>
-        {% endfor %}
+        <div class="grid">
+            {% for event in events %}
+            <article>
+                <h3>{{ event.name }}</h3>
+    
+                {{ event.datetime.strftime("%H:%M %A %D") }}
+    
+                {% if event.location %}
+                <span>{{ event.location }}</span>
+                {% endif %}
+                {% if event.url %}
+                <span>{{ event.url }}</span>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
     </section>
 
     <section id="pages">
