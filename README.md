@@ -3,22 +3,22 @@
 A Facebook event scraper & aggregator, that fetches multiple pages' events and exports them to a static website and .ics file, automatically pushing it to Git(Hub Pages).
 
 ## Structure
-- [app/](tree/main/app/) - All code (Python and otherwise) here
-    - [export/](tree/main/app/scrape_and_parse/) - Everything concerning turning the Event objects into viewable data
-        - [templates/](tree/main/app/export/templates/) - Jinja templates used to render the static website
-        - [to_html.py](tree/main/app/export/to_html.py) - Code that implements the above Jinja templates to create public/index.html
-        - [to_ics.py](tree/main/app/export/to_ics.py) - Code that turns Event objects into (a) .ics file(s)
-    - [scrape_and_parse/](tree/main/app/scrape_and_parse/) - Everything concerning scraping information into JSON & Event objects
-        - [driver.py](tree/main/app/scrape_and_parse/driver.py) - Selenium Driver settings (selected browser, startup args...)
-        - [fb_login.py](tree/main/app/scrape_and_parse/fb_login.py) - Handles logging into Facebook
-        - [locale.py](tree/main/app/scrape_and_parse/locale.py) - Handles converting www.facebook to lang-country.facebook and back
-        - [regex.py](tree/main/app/scrape_and_parse/locale.py) - Includes regex patterns and functions to use them
-        - [scrape_and_parse.py](tree/main/app/scrape_and_parse/locale.py) - Handles the actual scraping & parsing part
-    - [Event.py](tree/main/app/Event.py) - Python Class to handle Events
-    - [main.py](tree/main/app/main.py) - Entrypoint that combines everything into one script
-    - [repo.py](tree/main/app/repo.py) - Handles the upkeep of the repo within public/
+- [app/](blob/main/app/) - All code (Python and otherwise) here
+    - [export/](blob/main/app/scrape_and_parse/) - Everything concerning turning the Event objects into viewable data
+        - [templates/](blob/main/app/export/templates/) - Jinja templates used to render the static website
+        - [to_html.py](blob/main/app/export/to_html.py) - Code that implements the above Jinja templates to create public/index.html
+        - [to_ics.py](blob/main/app/export/to_ics.py) - Code that turns Event objects into (a) .ics file(s)
+    - [scrape_and_parse/](blob/main/app/scrape_and_parse/) - Everything concerning scraping information into JSON & Event objects
+        - [driver.py](blob/main/app/scrape_and_parse/driver.py) - Selenium Driver settings (selected browser, startup args...)
+        - [fb_login.py](blob/main/app/scrape_and_parse/fb_login.py) - Handles logging into Facebook
+        - [locale.py](blob/main/app/scrape_and_parse/locale.py) - Handles converting www.facebook to lang-country.facebook and back
+        - [regex.py](blob/main/app/scrape_and_parse/locale.py) - Includes regex patterns and functions to use them
+        - [scrape_and_parse.py](blob/main/app/scrape_and_parse/locale.py) - Handles the actual scraping & parsing part
+    - [Event.py](blob/main/app/Event.py) - Python Class to handle Events
+    - [main.py](blob/main/app/main.py) - Entrypoint that combines everything into one script
+    - [repo.py](blob/main/app/repo.py) - Handles the upkeep of the repo within public/
 - public/ - Generated at runtime, contains the end result/exported files
-- [requirements.txt](tree/main/requirements.txt) - Python packages that have to be installed
+- [requirements.txt](blob/main/requirements.txt) - Python packages that have to be installed
 
 ## Maintaining
 This application is made to be as platform-agnostic as possible. However, the weak link is in the Facebook scraping. The parse_* functions in [step-1.py](app/step-1.py) are most likely to need changes. So if the application doesn't find any events, look there first.
