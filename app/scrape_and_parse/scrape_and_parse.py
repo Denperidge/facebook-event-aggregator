@@ -33,7 +33,7 @@ def parse_page(driver, logged_in):
     return events
 
 def parse_community(driver, logged_in):
-    print(driver.find_element(By.TAG_NAME,"body").text)
+    #print(driver.find_element(By.TAG_NAME,"body").text)
     
     if not logged_in:
         event_container = driver.find_element(By.ID, "upcoming_events_card").find_element(By.TAG_NAME, "table")
@@ -51,11 +51,12 @@ def parse_community(driver, logged_in):
         (raw_data, time) = find_and_remove(raw_data, re_utc_time)
         (raw_data, guests) = find_and_remove(raw_data, re_guests)  # Unused
         (raw_data, name) = find_and_remove(raw_data, re_line_with_characters)
+        url = event.find_element(By.TAG_NAME, "a").get_attribute("href")
 
         datetime = date + " " + time
         location = raw_data.replace("\n", " ").strip()
 
-        event = Event(name, datetime, location)
+        event = Event(name, datetime, location, url)
 
         print(event.location)
 
