@@ -44,6 +44,15 @@ See also [crontab guru](https://crontab.guru/)!
 | `update` | Push any changes from public/ output to the repository |
 | `noscrape` | Don't scrape, and instead just load info from the existing events.json |
 
+
+
+| .env (file) parameter | Functionality |
+| --------------------- | -------------- |
+| `pages`               | Which Facebook event pages have to be scraped. A JSON string of nested lists ([["page_type", "page_url"], ["page_type", "page_url]]) |
+| `title` | (Recommended) The title of index.html
+| `facebook_email`     | (Optional) The email of a Facebook account with which you want to scrape, in case you want to be logged in during. | 
+| `facebook_password` | (Optional) The password of the Facebook account, in case you want to be logged in during. |
+
 <details>
     <summary>Don't forget to configure Git on the device if that's not done already!</summary>
     ```bash
