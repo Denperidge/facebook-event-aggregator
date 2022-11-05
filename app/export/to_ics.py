@@ -10,12 +10,20 @@ from ics import Calendar, Event as IcsEvent
 # Local imports
 from repo import update_repo
 from Event import load_events_from_json
+from export.to_html import slugify
 
 def events_to_ics(events, output_dir):
     output_dir = realpath(output_dir)
     ics_all = join(output_dir, "all.ics")
 
-    calendar = Calendar()
+    all_calendar = Calendar()
+    source_calendars = dict()
+
+    sources = set([event.source for event in events])
+    for source in sources:
+        source_calendars[source] = Calendar()
+    
+
     for event in events:
         ics_event = IcsEvent()
         ics_event.name = event.name
@@ -27,11 +35,19 @@ def events_to_ics(events, output_dir):
 
         ics_event.description = event.description
 
-        calendar.events.add(ics_event)
+        all_calendar.events.add(ics_event)
+        source_calendars[event.source].events.add(ics_event)
         
 
     with open(ics_all, "w") as file:
-        file.writelines(calendar.serialize_iter())
+        file.writelines(all_calendar.serialize_iter())
+    
+    for source in source_calendars:
+        dest = join(output_dir, slugify(source) + ".ics")
+        calendar = source_calendars[source]
+
+        with open(dest, "w") as file:
+            file.writelines(calendar.serialize_iter())
 
 
 # For testing:
