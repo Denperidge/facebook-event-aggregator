@@ -23,9 +23,20 @@ def parse_page(driver, logged_in):
             print("detected main event with times, skipping current")
             continue
 
+        
+        
+        # find_element doesn't work, perhaps due to grandchild?
+        try:
+            urls = event.find_elements(By.TAG_NAME, "a")
+            url = urls[0].get_attribute("href")
+            print(url)
+        except IndexError:
+            print("No url found")
+            url = ""
+
         lines = raw_data.split("\n")
         try:
-            event = Event(lines[1], lines[0], "")
+            event = Event(lines[1], lines[0], "", url)
             events.append(event)
         except IndexError:
             print("Failed to add event from page")
