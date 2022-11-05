@@ -25,7 +25,7 @@ class Event(object):
     def from_dict(cls, dict):
         return cls(
             name=dict["name"], 
-            datetime=parser.parse(dict["datetime"]),
+            datetime=dict["datetime"],
             location=dict["location"],
             url=dict["url"]
             )
