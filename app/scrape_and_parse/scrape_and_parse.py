@@ -10,6 +10,7 @@ from selenium.common.exceptions import NoSuchElementException
 # Local imports
 from .regex import find_and_remove, regex_in, re_line_with_characters, re_guests, re_three_letter_two_digit_date, re_utc_time, re_utc_and_more
 from Event import Event
+from scrape_and_parse.driver import setup_driver
 
 """ PARSING FUNCTIONS """
 def parse_page(driver, logged_in):
@@ -23,24 +24,54 @@ def parse_page(driver, logged_in):
             print("detected main event with times, skipping current")
             continue
 
-        
-        
-        # find_element doesn't work, perhaps due to grandchild?
         try:
-            urls = event.find_elements(By.TAG_NAME, "a")
-            url = urls[0].get_attribute("href")
-            print(url)
-        except IndexError:
-            print("No url found")
+            lines = raw_data.split("\n")
+            name = lines[1]
+            datetime = lines[0]
             url = ""
-
-        lines = raw_data.split("\n")
-        try:
-            event = Event(lines[1], lines[0], "", url)
-            events.append(event)
+            location = ""
         except IndexError:
             print("Failed to add event from page")
-            print(lines)
+            print("Provided data: {}".format(lines))
+        
+        try:
+            # find_element doesn't work, perhaps due to grandchild?
+            urls = event.find_elements(By.TAG_NAME, "a")
+            url = urls[0].get_attribute("href")
+            try:
+                print("Searching for location in " + url)
+                tmp_driver = setup_driver(headless=True)
+                tmp_driver.get(url)
+                sleep(5)
+                info_rows = tmp_driver.find_elements(By.XPATH, "//div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div[2]/div/div/div/div[1]/div[1]/div/div/div/*")
+                # Assume the first row is location, except if it contains specific text
+                for info_row in info_rows:
+                    info = info_row.text
+                    info_lower = info.lower()
+                    if "details" in info_lower or "event by" in info_lower or "people respon" in info_lower:
+                        continue
+                    
+                    # If location hasn't been found yet, assume the first line (that isn't excluded) is
+                    location = info
+                    break
+                    """ The following code can be used to begin implementing duration
+                    if not location:
+                        location = info
+                    if "duration" in info_lower:
+                        pass  
+                    """
+                    
+                tmp_driver.quit()
+                
+            except Exception as e:
+                print(e)
+                print("Location could not be fetched")
+        except IndexError:
+            print("No url found")
+
+        event = Event(name, datetime, location, url)
+        events.append(event)
+        
     return events
 
 def parse_community(driver, logged_in):
