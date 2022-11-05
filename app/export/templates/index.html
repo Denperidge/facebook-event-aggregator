@@ -24,15 +24,13 @@
 
     <section id="pages">
         <h2>Pages & communities</h2>
-        <span>
-            Check out the pages and communities that organise these events! (Note: this page is NOT affiliated with the
-            pages listed)
-        </span>
+        <p>Check out the pages and communities that organise these events!</p>
         <ul>
             {% for page in pages %}
             <li><a href="{{ page }}">{{ page }}</a></li>
             {% endfor %}
         </ul>
+        <p>(Note: this page is NOT directly affiliated with the pages listed)</p>
     </section>
 </main>
 
