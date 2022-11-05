@@ -39,7 +39,8 @@ def update_repo(dir, commit_msg=None):
     
     print(commit_msg)
 
-    git_command(dir, 
+    git_command(dir,
+        "pull",
         "add .", 
         "commit -m \"{}\"".format(commit_msg),
         "push origin main"
