@@ -14,7 +14,9 @@ from Event import load_events_from_json
 template_dir = join(realpath(dirname(__file__)), "templates")
 env = Environment(
     loader=FileSystemLoader(template_dir),
-    autoescape=True
+    autoescape=True,
+    trim_blocks=True,  # Thanks to https://stackoverflow.com/a/35777386
+    lstrip_blocks=True
 )
 
 def events_to_html(events, output_dir):
