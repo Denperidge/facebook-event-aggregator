@@ -153,6 +153,6 @@ def scrape_events(driver, pages, logged_in):
 
         except Exception as e:
             print("Error parsing {}".format(page[1]))
-            print(e)
+            raise e
 
     return events
