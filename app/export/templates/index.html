@@ -11,13 +11,12 @@
             <article>
                 <h3>{{ event.name }}</h3>
     
-                {{ event.datetime.strftime("%H:%M %A %D") }}
-    
+                <p>{{ event.datetime.strftime("%H:%M %A %D") }}</p>
                 {% if event.location %}
                 <span>{{ event.location }}</span>
                 {% endif %}
                 {% if event.url %}
-                <span>{{ event.url }}</span>
+                <a href="{{ event.url }}">View on Facebook</a>
                 {% endif %}
             </article>
             {% endfor %}
