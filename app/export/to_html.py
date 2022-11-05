@@ -10,6 +10,7 @@ from jinja2 import FileSystemLoader, Environment
 
 # Local imports
 from Event import load_events_from_json
+from scrape_and_parse.scrape_and_parse import read_pages_from_env
 
 template_dir = join(realpath(dirname(__file__)), "templates")
 env = Environment(
@@ -21,8 +22,14 @@ env = Environment(
 
 def events_to_html(events, output_dir):
     template_index = env.get_template("index.html")
+
+    pages = [page[1] for page in read_pages_from_env()] 
     
-    output = template_index.render(events=events, title=getenv("title"))
+    
+    output = template_index.render(
+        events=events, 
+        title=getenv("title"),
+        pages=pages)
 
     filename_index = join(output_dir, "index.html")
     with open(filename_index, "w") as file:
