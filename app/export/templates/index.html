@@ -9,9 +9,19 @@
     <h1>{{ title }}</h1>
     <section>
         <h2>Events</h2>
-        <div class="grid">
+
+        <nav>
+            <ul id="sources">
+                <li>Filter:</li>
+                {% for source in sources %}
+                <li><a href="#" id="{{ source|slug }}">{{ source }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        <div id="events" class="grid">
             {% for event in events %}
-            <article class="{{ event.source }}">
+            <article class="{{ event.source|slug }}">
                 <h3>{{ event.name }}</h3>
     
                 <p>{{ event.datetime.strftime("%H:%M - %A %d %b %Y") }}</p>
@@ -79,4 +89,5 @@
 
 <!-- https://github.com/add2cal/add-to-calendar-button -->
 <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@1" async defer></script>
+<script>{% include "index.js" %}</script>
 {% endblock body %}

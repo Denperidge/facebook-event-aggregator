@@ -7,6 +7,7 @@ from json import load
 # Package imports
 from dateutil import parser
 from jinja2 import FileSystemLoader, Environment
+from slugify import slugify
 
 # Local imports
 from Event import load_events_from_json
@@ -17,8 +18,13 @@ env = Environment(
     loader=FileSystemLoader(template_dir),
     autoescape=True,
     trim_blocks=True,  # Thanks to https://stackoverflow.com/a/35777386
-    lstrip_blocks=True
+    lstrip_blocks=True,
 )
+
+def filter_slugify(value):
+    return slugify(value)
+env.filters["slug"] = filter_slugify
+
 
 def events_to_html(events, output_dir):
     template_index = env.get_template("index.html")
@@ -31,7 +37,8 @@ def events_to_html(events, output_dir):
         events=events, 
         title=getenv("title"),
         timezone=getenv("tz", "UTC"),
-        pages=pages)
+        pages=pages,
+        sources=sources)
 
     filename_index = join(output_dir, "index.html")
     with open(filename_index, "w") as file:
