@@ -10,9 +10,12 @@ sourceFilters.on("click", function(e) {
     if (sourceFilter.attr("role") != "button") {
         sourceFilters.attr("role", "");  // Disable any other active buttons
         sourceFilter.attr("role", "button");  // Activate the current
-        events.hide(400);  // Hide all events
+
+        let selectedEvents = $(`${eventSelector}.${sourceFilter.attr("id")}`);
+
+        events.not(selectedEvents).hide(400);  // Hide all events
         // Besides of the selected source
-        $(`${eventSelector}.${sourceFilter.attr("id")}`).show(400);
+        selectedEvents.show(400);
     } else {
         sourceFilter.attr("role", "");
         events.show(400);
