@@ -11,7 +11,7 @@
             <article>
                 <h3>{{ event.name }}</h3>
     
-                <p>{{ event.datetime.strftime("%H:%M %A %D") }}</p>
+                <p>{{ event.datetime.strftime("%H:%M - %A %d %b %Y") }}</p>
                 {% if event.location %}
                 <span>{{ event.location }}</span>
                 {% endif %}
