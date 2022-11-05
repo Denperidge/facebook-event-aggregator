@@ -2,13 +2,14 @@
 from sys import argv
 from os import makedirs
 from os.path import realpath, join, abspath, dirname
-from json import dump
+from json import dump, load
 
 # Package imports
 from dotenv import load_dotenv
 
 # Local imports
 from repo import clone_repo_if_not_exists, update_repo
+from Event import load_events_from_json
 from scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
 from scrape_and_parse.driver import setup_driver
 from scrape_and_parse.fb_login import handle_fb_login
@@ -26,9 +27,10 @@ if __name__ == "__main__":
     events_json = join(public_dir, "events.json")
 
     # Load .env file and startup params
-    startup_args = [arg.lower() for arg in argv]
+    startup_args = [arg.lower() for arg in argv[1:]]
     headless = "headless" in startup_args
     update = "update" in startup_args
+    scrape = "noscrape" not in startup_args
 
     load_dotenv(env_file)
     pages = read_pages_from_env()
@@ -37,12 +39,17 @@ if __name__ == "__main__":
     # Clone repo into public/
     clone_repo_if_not_exists(parent_dir=root_dir, dest_dirname=public_dirname)
 
-    # Setup Selenium scraper
-    driver = setup_driver(headless)
-    logged_in = handle_fb_login(driver, headless)
+    if scrape:
+        # Setup Selenium scraper
+        driver = setup_driver(headless)
+        logged_in = handle_fb_login(driver, headless)
 
-    # Scrape events
-    events = scrape_events(driver, pages, logged_in)
+        # Scrape events
+        events = scrape_events(driver, pages, logged_in)
+    else:
+        events = load_events_from_json(events_json)
+                
+
     
     # Export
     #with open(events_json, "w") as file:
@@ -55,5 +62,6 @@ if __name__ == "__main__":
 
 
     # Cleanup
-    driver.quit()
+    if scrape:
+        driver.quit()
             

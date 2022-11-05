@@ -7,6 +7,9 @@ from json import load
 from dateutil import parser
 from jinja2 import FileSystemLoader, Environment
 
+# Local imports
+from Event import load_events_from_json
+
 template_dir = join(realpath(dirname(__file__)), "templates")
 env = Environment(
     loader=FileSystemLoader(template_dir),
@@ -28,10 +31,6 @@ if __name__ == "__main__":
     events_json = realpath(argv[1])
     dir = dirname(events_json)
 
-    with open(events_json, "r") as file:
-        events = load(file)
-        for event in events:
-            print(event)
-            event["datetime"] = parser.parse(event["datetime"])
+    events = load_events_from_json(events_json)
 
     events_to_html(events, dir)

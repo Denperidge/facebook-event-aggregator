@@ -5,24 +5,25 @@ from json import load
 
 # Package imports
 from dateutil import parser
-from ics import Calendar, Event
+from ics import Calendar, Event as IcsEvent
 
 # Local imports
 from repo import update_repo
+from Event import load_events_from_json
 
 def events_to_ics(events, output_dir):
     output_dir = realpath(output_dir)
     ics_all = join(output_dir, "all.ics")
 
     calendar = Calendar()
-    for raw_event in events:
-        event = Event()
-        event.name = raw_event["name"]
-        event.begin = raw_event["datetime"]
-        event.location = raw_event["location"]
-        event.url = raw_event["url"]
+    for event in events:
+        ics_event = IcsEvent()
+        ics_event.name = event.name
+        ics_event.begin = event.datetime
+        ics_event.location = event.location
+        ics_event.url = event.url
 
-        calendar.events.add(event)
+        calendar.events.add(ics_event)
         
 
     with open(ics_all, "w") as file:
@@ -35,9 +36,9 @@ if __name__ == "__main__":
     events_json = realpath(argv[1])
     dir = dirname(events_json)
 
-    with open(events_json, "r") as file:
-        events = load(file)
-    
+    events = load_events_from_json(events_json)
+
+
     events_to_ics(events, dir)
 
     update_repo(dir)
