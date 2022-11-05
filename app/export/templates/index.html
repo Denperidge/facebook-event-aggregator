@@ -13,7 +13,7 @@
     
                 <p>{{ event.datetime.strftime("%H:%M - %A %d %b %Y") }}</p>
                 {% if event.location %}
-                <span>{{ event.location }}</span>
+                <p>@ {{ event.location }}</p>
                 {% endif %}
                 {% if event.url %}
                 <a href="{{ event.url }}">View on Facebook</a>

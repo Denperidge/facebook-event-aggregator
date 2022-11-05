@@ -58,6 +58,7 @@ def parse_community(driver, logged_in):
         print("Detected upcoming event in {}!".format("community"))
         raw_data = event.text
 
+
         (raw_data, date) = find_and_remove(raw_data, re_three_letter_two_digit_date)
         (raw_data, time) = find_and_remove(raw_data, re_utc_time)
         (raw_data, guests) = find_and_remove(raw_data, re_guests)  # Unused
@@ -65,11 +66,13 @@ def parse_community(driver, logged_in):
         url = event.find_element(By.TAG_NAME, "a").get_attribute("href")
 
         datetime = date + " " + time
-        location = raw_data.replace("\n", " ").strip()
+        
+        try:
+            location = event.find_elements(By.TAG_NAME, "td")[2].text.replace("\n", " ")
+        except NoSuchElementException:
+            print("Location could not be fetched")
 
         event = Event(name, datetime, location, url)
-
-        print(event.location)
 
         events.append(event)
     return events
