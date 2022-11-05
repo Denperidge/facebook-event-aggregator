@@ -1,4 +1,5 @@
 # Built-in imports
+from os import getenv
 from os.path import realpath, dirname, join
 from sys import argv
 from json import load
@@ -19,7 +20,7 @@ env = Environment(
 def events_to_html(events, output_dir):
     template_index = env.get_template("index.html")
     
-    output = template_index.render(events=events)
+    output = template_index.render(events=events, title=getenv("title"))
 
     filename_index = join(output_dir, "index.html")
     with open(filename_index, "w") as file:
