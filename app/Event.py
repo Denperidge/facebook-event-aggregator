@@ -6,6 +6,9 @@ from json import load, dump
 from datetime import timedelta
 from dateutil import parser
 
+# Local imports
+from scrape_and_parse.locale import facebook_locale_to_www
+
 class Event(object):
     """
     name = str
@@ -37,7 +40,7 @@ class Event(object):
         return serializable_event.__dict__
     
     def clean_url(self):
-        url = self.url.replace("en-gb.facebook", "www.facebook")
+        url = facebook_locale_to_www(self.url)
         url = url[:url.index("?")]
         return url
     

@@ -11,6 +11,7 @@ from selenium.common.exceptions import NoSuchElementException
 from .regex import find_and_remove, regex_in, re_line_with_characters, re_guests, re_three_letter_two_digit_date, re_utc_time, re_utc_and_more
 from Event import Event
 from scrape_and_parse.driver import setup_driver
+from scrape_and_parse.locale import facebook_www_to_locale
 
 """ PARSING FUNCTIONS """
 def parse_page(driver, logged_in):
@@ -128,7 +129,7 @@ def read_pages_from_env(replace_locale=True):
     
         if replace_locale:
             # Specify localisation
-            url = url.replace("www.facebook", "en-gb.facebook")
+            url = facebook_www_to_locale(url)
 
         pages.append((func, url))
     return pages
