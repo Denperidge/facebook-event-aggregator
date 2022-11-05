@@ -45,7 +45,8 @@ class Event(object):
     
     def clean_url(self):
         url = facebook_locale_to_www(self.url)
-        url = url[:url.index("?")]
+        if "?" in url:
+            url = url[:url.index("?")]
         return url
     
     # See Add To Calendar Button documentation: https://github.com/add2cal/add-to-calendar-button#typical-structure
