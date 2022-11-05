@@ -1,17 +1,24 @@
 # Sociaalisme
 
-A Facebook event scraper & aggregator, that displays multiple groups' events in a static website and .ics file.
+A Facebook event scraper & aggregator, that fetches multiple pages' events and exports them to a static website and .ics file, automatically pushing it to Git(Hub Pages).
 
 ## Structure
-For more in depth or WIP notes, see [dev-notes](dev-notes.md)
-
-1. `step-1.py` Scrapes the information from Facebook and turns that data into JSON.
-2. `step-2.py` Turns the JSON data into...
-    1. A static website
-    2. A .ical link
-3. `step-3.py` Uploads the data to GitHub Pages
-
-This is all done locally, as to avoid the login sequence that Facebook asks when this is run from GitHub Actions (presumably due to rate limiting). The non-logged in Facebook interface is easier to scrape, presumably due to GraphQL (although that might be incorrect).
+- [app/](tree/main/app/) - All code (Python and otherwise) here
+    - [export/](tree/main/app/scrape_and_parse/) - Everything concerning turning the Event objects into viewable data
+        - [templates/](tree/main/app/export/templates/) - Jinja templates used to render the static website
+        - [to_html.py](tree/main/app/export/to_html.py) - Code that implements the above Jinja templates to create public/index.html
+        - [to_ics.py](tree/main/app/export/to_ics.py) - Code that turns Event objects into (a) .ics file(s)
+    - [scrape_and_parse/](tree/main/app/scrape_and_parse/) - Everything concerning scraping information into JSON & Event objects
+        - [driver.py](tree/main/app/scrape_and_parse/driver.py) - Selenium Driver settings (selected browser, startup args...)
+        - [fb_login.py](tree/main/app/scrape_and_parse/fb_login.py) - Handles logging into Facebook
+        - [locale.py](tree/main/app/scrape_and_parse/locale.py) - Handles converting www.facebook to lang-country.facebook and back
+        - [regex.py](tree/main/app/scrape_and_parse/locale.py) - Includes regex patterns and functions to use them
+        - [scrape_and_parse.py](tree/main/app/scrape_and_parse/locale.py) - Handles the actual scraping & parsing part
+    - [Event.py](tree/main/app/Event.py) - Python Class to handle Events
+    - [main.py](tree/main/app/main.py) - Entrypoint that combines everything into one script
+    - [repo.py](tree/main/app/repo.py) - Handles the upkeep of the repo within public/
+- public/ - Generated at runtime, contains the end result/exported files
+- [requirements.txt](tree/main/requirements.txt) - Python packages that have to be installed
 
 ## Maintaining
 This application is made to be as platform-agnostic as possible. However, the weak link is in the Facebook scraping. The parse_* functions in [step-1.py](app/step-1.py) are most likely to need changes. So if the application doesn't find any events, look there first.
@@ -68,3 +75,9 @@ See also [crontab guru](https://crontab.guru/)!
 
 Make sure to run `pipreqs` following command if any modules get added to a python file.
 (Note: pipreqs seems to have some issues with the match statement. If that's still the case, comment those lines out before running)
+
+## GitHub Actions
+Besides the hosting through GitHub Pages, everything is done locally. If you look in the branches, you'll notice an old entirely GitHub Actions based version. However, doing it locally  avoids the login sequence that Facebook asks when this is run from GitHub Actions (presumably due to rate limiting). The non-logged in Facebook interface is easier to scrape, presumably due to GraphQL (although that might be incorrect).
+
+## License
+All the code written by me in this repository is licensed under the [MIT License](LICENSE).
