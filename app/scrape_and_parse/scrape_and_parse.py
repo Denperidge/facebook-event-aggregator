@@ -15,6 +15,7 @@ from scrape_and_parse.locale import facebook_www_to_locale
 
 """ PARSING FUNCTIONS """
 def parse_page(driver, logged_in):
+    source = driver.find_element(By.XPATH, "//h1").text
     event_container = driver.find_element(By.XPATH, """//div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div/div/div/div/div/div[3]""")
     raw_events = event_container.find_elements(By.XPATH, "*")
     events = []
@@ -71,13 +72,14 @@ def parse_page(driver, logged_in):
         except IndexError:
             print("No url found")
 
-        event = Event(name, datetime, location, url)
+        event = Event(name, datetime, source, location, url)
         events.append(event)
         
     return events
 
 def parse_community(driver, logged_in):
     #print(driver.find_element(By.TAG_NAME,"body").text)
+    source = driver.find_element(By.XPATH, "//h1").text
     
     if not logged_in:
         event_container = driver.find_element(By.ID, "upcoming_events_card").find_element(By.TAG_NAME, "table")
@@ -105,7 +107,7 @@ def parse_community(driver, logged_in):
         except NoSuchElementException:
             print("Location could not be fetched")
 
-        event = Event(name, datetime, location, url)
+        event = Event(name, datetime, source, location, url)
 
         events.append(event)
     return events

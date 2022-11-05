@@ -17,12 +17,15 @@ class Event(object):
     """
 
 
-    def __init__(self, name, datetime, location, url=""):
+    def __init__(self, name, datetime, source, location, url=""):
         self.name = name
         # Replacement due to bug ? https://github.com/dateutil/dateutil/issues/70#issuecomment-945080282
         self.datetime = parser.parse(datetime.replace("UTC", ""))
         self.location = location
         self.url = url
+
+        self.source = source
+        self.description = "Organized by {0}. See {1} for more info".format(self.source, self.clean_url())
     
     # Thanks to https://stackoverflow.com/a/682545 & https://www.programiz.com/python-programming/methods/built-in/classmethod
     @classmethod
@@ -30,6 +33,7 @@ class Event(object):
         return cls(
             name=dict["name"], 
             datetime=dict["datetime"],
+            source=dict["source"],
             location=dict["location"],
             url=dict["url"]
             )

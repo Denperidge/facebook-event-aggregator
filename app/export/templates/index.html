@@ -11,12 +11,15 @@
         <h2>Events</h2>
         <div class="grid">
             {% for event in events %}
-            <article>
+            <article class="{{ event.source }}">
                 <h3>{{ event.name }}</h3>
     
                 <p>{{ event.datetime.strftime("%H:%M - %A %d %b %Y") }}</p>
                 {% if event.location %}
                 <p>@ {{ event.location }}</p>
+                {% endif %}
+                {% if event.source %}
+                <p>Organised by {{ event.source }}</p>
                 {% endif %}
                 {% if event.url %}
                 <a href="{{ event.url }}">View on Facebook</a>
@@ -32,8 +35,12 @@
                         "startDate": "{{ event.datetime.strftime("%Y-%m-%d") }}",
                         "startTime": "{{ event.datetime.strftime("%H:%M") }}",
                         "endTime": "{{ event.endTime().strftime("%H:%M") }}",
+                        {#
+                            Requires name|email
+                        "organizer": "{{ event.organizer }}", 
+                        #}
                         "location": "{{ event.location }}",
-                        "description": "View the Event here: {{ event.clean_url() }}",
+                        "description": "{{ event.description|escape }}",
                         "timeZone": "{{ timezone }}",
 
                         {# atcb configuration #}

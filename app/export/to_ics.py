@@ -20,8 +20,12 @@ def events_to_ics(events, output_dir):
         ics_event = IcsEvent()
         ics_event.name = event.name
         ics_event.begin = event.datetime
+        # organizer also requires email
+        #ics_event.organizer = event.organizer
         ics_event.location = event.location
         ics_event.url = event.url
+
+        ics_event.description = event.description
 
         calendar.events.add(ics_event)
         

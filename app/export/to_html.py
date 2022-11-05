@@ -23,7 +23,8 @@ env = Environment(
 def events_to_html(events, output_dir):
     template_index = env.get_template("index.html")
 
-    pages = [page[1] for page in read_pages_from_env(replace_locale=False)] 
+    pages = [page[1] for page in read_pages_from_env(replace_locale=False)]
+    sources = set([event.source for event in events])
     
     
     output = template_index.render(
