@@ -33,6 +33,7 @@ def parse_page(driver, logged_in):
         except IndexError:
             print("Failed to add event from page")
             print("Provided data: {}".format(lines))
+            continue
         
         try:
             # find_element doesn't work, perhaps due to grandchild?
