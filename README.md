@@ -63,6 +63,8 @@ See also [crontab guru](https://crontab.guru/)!
 | `facebook_email`     | (Optional) The email of a Facebook account with which you want to scrape, in case you want to be logged in during. | 
 | `facebook_password` | (Optional) The password of the Facebook account, in case you want to be logged in during. |
 
+If the source is a `page`, the events url should normally end with `/upcoming_hosted_events`. For `community` sources, it tends to be `/events`.
+
 <details>
     <summary>Don't forget to configure Git on the device if that's not done already!</summary>
     ```bash
