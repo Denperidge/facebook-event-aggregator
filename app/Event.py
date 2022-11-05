@@ -1,5 +1,6 @@
 # Built-in imports
-from json import load
+from copy import deepcopy
+from json import load, dump
 
 # Package imports
 from dateutil import parser
@@ -24,10 +25,15 @@ class Event(object):
     def from_dict(cls, dict):
         return cls(
             name=dict["name"], 
-            datetime=dict["datetime"],
+            datetime=parser.parse(dict["datetime"]),
             location=dict["location"],
             url=dict["url"]
             )
+    
+    def to_json(self):
+        serializable_event = deepcopy(self)
+        serializable_event.datetime = self.datetime.isoformat()
+        return serializable_event.__dict__
 
 def load_events_from_json(json_path):
     events = []
@@ -37,3 +43,11 @@ def load_events_from_json(json_path):
             event = Event.from_dict(raw_event)
             events.append(event)
     return events
+
+def events_to_json(events, json_path):
+    serializable_events = []
+    for event in events:
+        serializable_events.append(event.to_json())
+    
+    with open(json_path, "w") as file:
+        dump(serializable_events, file)

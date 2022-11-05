@@ -26,7 +26,7 @@ def parse_page(driver, logged_in):
         lines = raw_data.split("\n")
         try:
             event = Event(lines[1], lines[0], "")
-            events.append(event.__dict__)  # __dict__ is to allow json dump
+            events.append(event)
         except IndexError:
             print("Failed to add event from page")
             print(lines)
@@ -59,7 +59,7 @@ def parse_community(driver, logged_in):
 
         print(event.location)
 
-        events.append(event.__dict__)  # __dict__ is to allow json dump
+        events.append(event)
     return events
 
 
