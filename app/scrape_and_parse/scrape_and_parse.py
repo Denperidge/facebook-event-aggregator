@@ -63,7 +63,7 @@ def parse_community(driver, logged_in):
     return events
 
 
-def read_pages_from_env():
+def read_pages_from_env(replace_locale=True):
     """ LOADING & PARSING PAGES FROM .ENV """
     raw_pages = loads(getenv("pages"))
     pages = []
@@ -79,8 +79,9 @@ def read_pages_from_env():
             case _:  # Default
                 func = parse_page
     
-        # Specify localisation
-        url = url.replace("www.facebook", "en-gb.facebook")
+        if replace_locale:
+            # Specify localisation
+            url = url.replace("www.facebook", "en-gb.facebook")
 
         pages.append((func, url))
     return pages
