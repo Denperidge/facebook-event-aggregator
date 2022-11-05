@@ -29,6 +29,7 @@ def events_to_html(events, output_dir):
     output = template_index.render(
         events=events, 
         title=getenv("title"),
+        timezone=getenv("tz", "UTC"),
         pages=pages)
 
     filename_index = join(output_dir, "index.html")

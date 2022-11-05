@@ -3,6 +3,7 @@ from copy import deepcopy
 from json import load, dump
 
 # Package imports
+from datetime import timedelta
 from dateutil import parser
 
 class Event(object):
@@ -34,6 +35,15 @@ class Event(object):
         serializable_event = deepcopy(self)
         serializable_event.datetime = self.datetime.isoformat()
         return serializable_event.__dict__
+    
+    def clean_url(self):
+        url = self.url.replace("en-gb.facebook", "www.facebook")
+        url = url[:url.index("?")]
+        return url
+    
+    # See Add To Calendar Button documentation: https://github.com/add2cal/add-to-calendar-button#typical-structure
+    def endTime(self):
+        return self.datetime + timedelta(hours=2)
 
 def load_events_from_json(json_path):
     events = []
