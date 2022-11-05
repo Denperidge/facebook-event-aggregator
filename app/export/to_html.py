@@ -36,6 +36,7 @@ def events_to_html(events, output_dir):
     output = template_index.render(
         events=events, 
         title=getenv("title"),
+        domain=getenv("domain"),
         timezone=getenv("tz", "UTC"),
         pages=pages,
         sources=sources)

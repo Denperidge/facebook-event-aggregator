@@ -1,5 +1,6 @@
 # Built-in imports
 from sys import argv
+from os import makedirs
 from os.path import realpath, dirname, join
 from json import load
 
@@ -13,7 +14,8 @@ from Event import load_events_from_json
 from export.to_html import slugify
 
 def events_to_ics(events, output_dir):
-    output_dir = realpath(output_dir)
+    output_dir = join(realpath(output_dir), "ical/")
+    makedirs(output_dir, exist_ok=True)
     ics_all = join(output_dir, "all.ics")
 
     all_calendar = Calendar()
