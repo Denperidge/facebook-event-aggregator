@@ -1,21 +1,21 @@
+sourceFilters = $("nav a");
+eventSelector = "#events article";
+events = $(eventSelector);
 
-sourceFilters = document.querySelectorAll("nav a");
-for (let i = 0; i < sourceFilters.length; i++) {
-    sourceFilter = sourceFilters[i];
-    events = document.querySelectorAll("events section")
-    sourceFilter.addEventListener("click", (e) => {
-        let target = e.target;
-        let role = e.target.getAttribute("role");
+sourceFilters.on("click", function(e) {
+    sourceFilter = $(e.target);
+    console.log(sourceFilter.attr("id"))
 
-        // If not pressed before
-        console.log(target.role)
-        if (role != "button") {
-            e.target.setAttribute("role", "button");
-        } else {
-            
-        }
-
-        let selectedId = e.target.id;
-        
-    });
-}
+    // If not pressed before,
+    if (sourceFilter.attr("role") != "button") {
+        sourceFilters.attr("role", "");  // Disable any other active buttons
+        sourceFilter.attr("role", "button");  // Activate the current
+        events.hide(400);  // Hide all events
+        // Besides of the selected source
+        $(`${eventSelector}.${sourceFilter.attr("id")}`).show(400);
+    } else {
+        sourceFilter.attr("role", "");
+        events.show(400);
+    }
+    
+});
