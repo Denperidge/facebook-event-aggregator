@@ -45,7 +45,7 @@
                         "name": "{{ event.name }}",
                         "startDate": "{{ event.datetime.strftime("%Y-%m-%d") }}",
                         "startTime": "{{ event.datetime.strftime("%H:%M") }}",
-                        "endTime": "{{ event.endTime().strftime("%H:%M") }}",
+                        "endTime": "{{ event.endTime.strftime("%H:%M") }}",
                         {#
                             Requires name|email
                         "organizer": "{{ event.organizer }}", 

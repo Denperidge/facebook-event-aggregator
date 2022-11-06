@@ -26,9 +26,7 @@ class Event(object):
         self.datetime = parser.parse(datetime.replace("UTC", ""))
         self.location = location
         self.url = url
-
         self.source = source
-        self.description = "Organized by {0}. See {1} for more info".format(self.source, self.clean_url)
     
     # Thanks to https://stackoverflow.com/a/682545 & https://www.programiz.com/python-programming/methods/built-in/classmethod
     @classmethod
@@ -48,6 +46,10 @@ class Event(object):
         return serializable_event.__dict__
     
     @property
+    def description(self):
+        return "Organized by {0}. See {1} for more info".format(self.source, self.clean_url)
+    
+    @property
     def clean_url(self):
         url = facebook_locale_to_www(self.url)
         if "?" in url:
@@ -62,6 +64,7 @@ class Event(object):
         return slugify(self.clean_url) + slugify(self.datetime.isoformat())
     
     # See Add To Calendar Button documentation: https://github.com/add2cal/add-to-calendar-button#typical-structure
+    @property
     def endTime(self):
         return self.datetime + timedelta(hours=2)
     
