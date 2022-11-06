@@ -14,7 +14,7 @@ from scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
 from scrape_and_parse.driver import setup_driver
 from scrape_and_parse.fb_login import handle_fb_login
 from export.to_ics import events_to_ics
-from export.to_html import events_to_html
+from export.to_html import events_to_html, cleanup_images
 
 
 if __name__ == "__main__":
@@ -65,6 +65,7 @@ if __name__ == "__main__":
         events_to_json(events, events_json)
     events_to_ics(events, public_dir)
     events_to_html(events, public_dir, img_dir_relative)
+    cleanup_images(events, img_dir)
 
     if update:
         update_repo(public_dir)
