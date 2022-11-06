@@ -96,12 +96,12 @@ def parse_community(driver, logged_in, img_dir):
 def parse_event(event_url):
     location = None
     image_url = None
-    
+    event_url = facebook_www_to_locale(event_url)
     try:
         print("Searching for location & image in " + event_url)
         tmp_driver = setup_driver(headless=True)
         tmp_driver.get(event_url)
-        sleep(5)
+        sleep(20)
         info_rows = tmp_driver.find_elements(By.XPATH, "//div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div[2]/div/div/div/div[1]/div[1]/div/div/div/*")
         # Assume the first row is location, except if it contains specific text
         for info_row in info_rows:
