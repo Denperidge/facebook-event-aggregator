@@ -90,6 +90,13 @@ def parse_community(driver, logged_in, img_dir):
         event = Event(name, datetime, source, location, url)
 
         events.append(event)
+
+        try:
+            (location, image_url) = parse_event(url)
+            if image_url:
+                save_image(event, image_url, img_dir)
+        except Exception as e:
+            print(e)
     return events
 
 # Parse the event page in a secondary driver. This is universal for pages & communities
