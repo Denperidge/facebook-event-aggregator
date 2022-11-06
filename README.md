@@ -1,4 +1,4 @@
-# Sociaalisme
+# Facebook Event Aggregator
 
 A Facebook event scraper & aggregator, that fetches multiple pages' events and exports them to a static website and .ics file, automatically pushing it to Git(Hub Pages).
 
