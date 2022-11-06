@@ -32,7 +32,7 @@
                 <p>Organised by {{ event.source }}</p>
                 {% endif %}
                 {% if event.url %}
-                <a href="{{ event.url }}">View on Facebook</a>
+                <a href="{{ event.url }}" target="_blank">View on Facebook</a>
                 {% endif %}
                 
                 <br><br>
@@ -90,7 +90,7 @@
         <p>Check out the pages and communities that organise these events!</p>
         <ul>
             {% for page in pages %}
-            <li><a href="{{ page }}">{{ page }}</a></li>
+            <li><a href="{{ page }}" target="_blank">{{ page }}</a></li>
             {% endfor %}
         </ul>
         <p>(Note: this page is not made by the owners of the pages/communities listed above)</p>
@@ -102,8 +102,8 @@
         Events collected & page generated using
         <a href="https://github.com/Denperidge/facebook-event-aggregator">Facebook Event Aggregator</a>.
     </span>
-    <span>CSS Stylesheet by <a href="https://picocss.com/">Pico.css</a></span>
-    <span>Calendar buttons by <a href="https://add-to-calendar-button.com/">ATCB</a></span>
+    <span>CSS Stylesheet by <a href="https://picocss.com/" target="_blank">Pico.css</a></span>
+    <span>Calendar buttons by <a href="https://add-to-calendar-button.com/" target="_blank">ATCB</a></span>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
