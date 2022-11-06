@@ -22,9 +22,14 @@ if __name__ == "__main__":
     # Define absolute path variables
     root_dir = abspath(join(realpath(dirname(__file__)), "../"))
     env_file = join(root_dir, ".env")
+
     public_dirname = "public/"
     public_dir = join(root_dir, public_dirname)
+
+    img_dirname = "img/"
+    img_dir_relative = join(public_dirname, img_dirname)
     img_dir = join(public_dir, "img/")
+
     events_json = join(public_dir, "events.json")
 
     # Load .env file and startup params
@@ -59,7 +64,7 @@ if __name__ == "__main__":
     if scrape:
         events_to_json(events, events_json)
     events_to_ics(events, public_dir)
-    events_to_html(events, public_dir)
+    events_to_html(events, public_dir, img_dir_relative)
 
     if update:
         update_repo(public_dir)

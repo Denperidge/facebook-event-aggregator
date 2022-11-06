@@ -1,6 +1,8 @@
 # Built-in imports
 from copy import deepcopy
 from json import load, dump
+from os.path import join
+from glob import glob
 
 # Package imports
 from datetime import timedelta
@@ -62,6 +64,16 @@ class Event(object):
     # See Add To Calendar Button documentation: https://github.com/add2cal/add-to-calendar-button#typical-structure
     def endTime(self):
         return self.datetime + timedelta(hours=2)
+    
+    def get_image(self, image_dir):
+        try:
+            image_glob_str = join(image_dir, self.uid + "*")
+            return glob(image_glob_str)[0].replace("public/", "")
+        except IndexError:
+            print("No image found for " + self.uid)
+            return None
+        
+        
 
 def load_events_from_json(json_path):
     events = []

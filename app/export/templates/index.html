@@ -22,6 +22,7 @@
         <div id="events" class="grid">
             {% for event in events %}
             <article class="{{ event.source|slug }}">
+                <img src="{{ event.get_image(image_dir) }}"/>
                 <h3>{{ event.name }}</h3>
     
                 <p>{{ event.datetime.strftime("%H:%M - %A %d %b %Y") }}</p>

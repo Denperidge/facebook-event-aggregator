@@ -26,7 +26,7 @@ def filter_slugify(value):
 env.filters["slug"] = filter_slugify
 
 
-def events_to_html(events, output_dir):
+def events_to_html(events, output_dir, image_dir):
     template_index = env.get_template("index.html")
 
     pages = [page[1] for page in read_pages_from_env(replace_locale=False)]
@@ -35,6 +35,7 @@ def events_to_html(events, output_dir):
     
     output = template_index.render(
         events=events, 
+        image_dir=image_dir,
         title=getenv("title"),
         domain=getenv("domain"),
         timezone=getenv("tz", "UTC"),
