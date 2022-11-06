@@ -5,6 +5,7 @@ from json import load, dump
 # Package imports
 from datetime import timedelta
 from dateutil import parser
+from slugify import slugify
 
 # Local imports
 from scrape_and_parse.locale import facebook_locale_to_www
@@ -26,6 +27,9 @@ class Event(object):
 
         self.source = source
         self.description = "Organized by {0}. See {1} for more info".format(self.source, self.clean_url())
+        # Facebook allows double entries of the same event, but in different times.
+        # So the URL + datetime should be unique
+        self.uid = slugify(self.url) + slugify(self.datetime.isoformat())
     
     # Thanks to https://stackoverflow.com/a/682545 & https://www.programiz.com/python-programming/methods/built-in/classmethod
     @classmethod

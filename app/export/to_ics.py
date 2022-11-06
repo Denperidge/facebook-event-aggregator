@@ -7,6 +7,7 @@ from json import load
 # Package imports
 from dateutil import parser
 from ics import Calendar, Event as IcsEvent
+from slugify import slugify
 
 # Local imports
 from repo import update_repo
@@ -34,6 +35,7 @@ def events_to_ics(events, output_dir):
         #ics_event.organizer = event.organizer
         ics_event.location = event.location
         ics_event.url = event.url
+        ics_event.uid = event.uid
 
         ics_event.description = event.description
 
