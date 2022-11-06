@@ -4,6 +4,7 @@ from os.path import realpath, dirname, join, isfile
 from pathlib import Path
 from sys import argv
 from json import load
+from datetime import datetime
 
 # Package imports
 from dateutil import parser
@@ -55,7 +56,8 @@ def events_to_html(events, output_dir, image_dir):
         domain=getenv("domain"),
         timezone=getenv("tz", "UTC"),
         pages=pages,
-        sources=sources)
+        sources=sources,
+        now=datetime.now())
 
     filename_index = join(output_dir, "index.html")
     with open(filename_index, "w") as file:
