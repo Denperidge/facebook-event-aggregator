@@ -24,6 +24,7 @@ if __name__ == "__main__":
     env_file = join(root_dir, ".env")
     public_dirname = "public/"
     public_dir = join(root_dir, public_dirname)
+    img_dir = join(public_dir, "img/")
     events_json = join(public_dir, "events.json")
 
     # Load .env file and startup params
@@ -40,12 +41,15 @@ if __name__ == "__main__":
     clone_repo_if_not_exists(parent_dir=root_dir, dest_dirname=public_dirname)
 
     if scrape:
+        # Prepare img_dir in case it's needed
+        makedirs(img_dir, exist_ok=True)
+
         # Setup Selenium scraper
         driver = setup_driver(headless)
         logged_in = handle_fb_login(driver, headless)
 
         # Scrape events
-        events = scrape_events(driver, pages, logged_in)
+        events = scrape_events(driver, pages, logged_in, img_dir)
     else:
         events = load_events_from_json(events_json)
                 

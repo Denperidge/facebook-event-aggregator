@@ -18,7 +18,7 @@ class Event(object):
     """
 
 
-    def __init__(self, name, datetime, source, location, url=""):
+    def __init__(self, name, datetime, source, location, url):
         self.name = name
         # Replacement due to bug ? https://github.com/dateutil/dateutil/issues/70#issuecomment-945080282
         self.datetime = parser.parse(datetime.replace("UTC", ""))
@@ -26,10 +26,7 @@ class Event(object):
         self.url = url
 
         self.source = source
-        self.description = "Organized by {0}. See {1} for more info".format(self.source, self.clean_url())
-        # Facebook allows double entries of the same event, but in different times.
-        # So the URL + datetime should be unique
-        self.uid = slugify(self.clean_url()) + slugify(self.datetime.isoformat())
+        self.description = "Organized by {0}. See {1} for more info".format(self.source, self.clean_url)
     
     # Thanks to https://stackoverflow.com/a/682545 & https://www.programiz.com/python-programming/methods/built-in/classmethod
     @classmethod
@@ -42,16 +39,25 @@ class Event(object):
             url=dict["url"]
             )
     
+    
     def to_json(self):
         serializable_event = deepcopy(self)
         serializable_event.datetime = self.datetime.isoformat()
         return serializable_event.__dict__
     
+    @property
     def clean_url(self):
         url = facebook_locale_to_www(self.url)
         if "?" in url:
             url = url[:url.index("?")]
         return url
+    
+    # Thanks to https://www.geeksforgeeks.org/getter-and-setter-in-python/
+    @property
+    def uid(self):
+        # Facebook allows double entries of the same event, but in different times.
+        # So the URL + datetime should be unique
+        return slugify(self.clean_url) + slugify(self.datetime.isoformat())
     
     # See Add To Calendar Button documentation: https://github.com/add2cal/add-to-calendar-button#typical-structure
     def endTime(self):
