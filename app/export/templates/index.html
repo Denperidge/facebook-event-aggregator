@@ -52,13 +52,16 @@
                         "location": "{{ event.location }}",
                         "description": "{{ event.description|escape }}",
                         "timeZone": "{{ timezone }}",
+                        "uid": "{{ event.uid }}",
 
                         {# atcb configuration #}
                         "label": "Add {{ event.name|truncate(12, killwords=False)|escape }} to your Calendar",
+                        "iCalFileName": "{{ event.uid }}",
 
                         "options": ["Apple", "Google|Google Calendar", "Microsoft365", "Outlook.com", "Yahoo", "iCal|iCal (.ics file)"],
                         "trigger": "click",
-                        "listStyle": "overlay"
+                        "listStyle": "overlay",
+                        "lightMode": "system"
                     }
                 </div>
             </article>

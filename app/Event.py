@@ -29,7 +29,7 @@ class Event(object):
         self.description = "Organized by {0}. See {1} for more info".format(self.source, self.clean_url())
         # Facebook allows double entries of the same event, but in different times.
         # So the URL + datetime should be unique
-        self.uid = slugify(self.url) + slugify(self.datetime.isoformat())
+        self.uid = slugify(self.clean_url()) + slugify(self.datetime.isoformat())
     
     # Thanks to https://stackoverflow.com/a/682545 & https://www.programiz.com/python-programming/methods/built-in/classmethod
     @classmethod
