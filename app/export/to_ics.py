@@ -1,7 +1,7 @@
 # Built-in imports
 from sys import argv
 from os import makedirs
-from os.path import realpath, dirname, join
+from os.path import realpath, dirname, join, exists
 from json import load
 
 # Package imports
@@ -14,17 +14,26 @@ from repo import update_repo
 from Event import load_events_from_json
 from export.to_html import slugify
 
+def read_ics_if_exists(ics_path):
+    if exists(ics_path):
+        with open(ics_path, "r") as file:
+            ics_text = file.read()
+        return Calendar(ics_text)
+    else:
+        return Calendar()
+
 def events_to_ics(events, output_dir):
     output_dir = join(realpath(output_dir), "ical/")
     makedirs(output_dir, exist_ok=True)
     ics_all = join(output_dir, "all.ics")
 
-    all_calendar = Calendar()
+    all_calendar = read_ics_if_exists(ics_all)
     source_calendars = dict()
 
     sources = set([event.source for event in events])
     for source in sources:
-        source_calendars[source] = Calendar()
+        source_ics = join(output_dir, slugify(source) + ".ics")
+        source_calendars[source] = read_ics_if_exists(source_ics)
     
 
     for event in events:
@@ -35,7 +44,7 @@ def events_to_ics(events, output_dir):
         #ics_event.organizer = event.organizer
         ics_event.location = event.location
         ics_event.url = event.url
-        ics_event.uid = event.uid
+        ics_event.uid = event.uid  # Thanks to uid, no duplicate entries will be made
 
         ics_event.description = event.description
 
