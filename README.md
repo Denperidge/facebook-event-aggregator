@@ -12,8 +12,8 @@ A Facebook event scraper & aggregator, that fetches multiple pages' events and e
         - [driver.py](app/scrape_and_parse/driver.py) - Selenium Driver settings (selected browser, startup args...)
         - [fb_login.py](app/scrape_and_parse/fb_login.py) - Handles logging into Facebook
         - [locale.py](app/scrape_and_parse/locale.py) - Handles converting www.facebook to lang-country.facebook and back
-        - [regex.py](app/scrape_and_parse/locale.py) - Includes regex patterns and functions to use them
-        - [scrape_and_parse.py](app/scrape_and_parse/locale.py) - Handles the actual scraping & parsing part
+        - [regex.py](app/scrape_and_parse/regex.py) - Includes regex patterns and functions to use them
+        - [scrape_and_parse.py](app/scrape_and_parse/scrape_and_parse.py) - Handles the actual scraping & parsing part
     - [Event.py](app/Event.py) - Python Class to handle Events
     - [main.py](app/main.py) - Entrypoint that combines everything into one script
     - [repo.py](app/repo.py) - Handles the upkeep of the repo within public/
@@ -21,7 +21,7 @@ A Facebook event scraper & aggregator, that fetches multiple pages' events and e
 - [requirements.txt](requirements.txt) - Python packages that have to be installed
 
 ## Maintaining
-This application is made to be as platform-agnostic as possible. However, the weak link is in the Facebook scraping. The parse_* functions in [step-1.py](app/step-1.py) are most likely to need changes. So if the application doesn't find any events, look there first.
+This application is made to be as platform-agnostic as possible. However, the weak link is in the Facebook scraping. The parse_* functions in [scrape_and_parse](app/scrape_and_parse/scrape_and_parse.py) are most likely to need changes down the line. So if the application doesn't find any events, look there first.
 
 
 ## Installing
