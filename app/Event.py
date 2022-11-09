@@ -1,7 +1,7 @@
 # Built-in imports
 from copy import deepcopy
 from json import load, dump
-from os.path import join
+from os.path import join, basename
 from glob import glob
 
 # Package imports
@@ -68,10 +68,35 @@ class Event(object):
     def endTime(self):
         return self.datetime + timedelta(hours=2)
     
-    def get_image(self, image_dir):
+    """
+    Okay so this is a doozy.
+    - Glob is being used to future proof, in case of png or jpg or jpeg. That's good.
+    - But it requires a local path to find the image
+    - But that path cannot be relative. Originally this was passed img_dir=public/img,
+      which then got public/ removed to img/filename.png.
+      That works when running from the project dir! When run in C:/ProjectDir, it will
+      look in C:/ProjectDir/public/img, find the thing, and replace as said above
+
+      But the glob will fail when run from a different folder
+      Cause then it will look for the file in C:/Differentdir/public/img and return None
+
+    So this function got redesigned to not return ANY path, and instead just a filename.
+    With optionally a relative path added as a paremeter
+
+   
+    """
+    def get_image(self, image_dir, return_with_path=None):
         try:
             image_glob_str = join(image_dir, self.uid + "*")
-            return glob(image_glob_str)[0].replace("public/", "")
+            filename_no_path = basename(glob(image_glob_str)[0])
+
+            if not return_with_path:
+                filename = filename_no_path
+            else:
+                filename = join(return_with_path, filename_no_path)
+
+            return filename
+
         except IndexError:
             print("No image found for " + self.uid)
             return None

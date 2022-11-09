@@ -42,16 +42,19 @@ def cleanup_images(upcoming_events, directory):
         
 
 
-def events_to_html(events, output_dir, image_dir):
+# img_dir: absolute path to look for in images
+# img_path_relative_to_index: relative path from index.html to where images are stored on the host
+# See Event.py
+def events_to_html(events, output_dir, img_dir, img_path_relative_to_index):
     template_index = env.get_template("index.html")
 
     pages = [page[1] for page in read_pages_from_env(replace_locale=False)]
     sources = set([event.source for event in events])
     
-    
     output = template_index.render(
         events=events, 
-        image_dir=image_dir,
+        image_dir=img_dir,
+        img_path_relative_to_index=img_path_relative_to_index,
         title=getenv("title"),
         domain=getenv("domain"),
         timezone=getenv("tz", "UTC"),

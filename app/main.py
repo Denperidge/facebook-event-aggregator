@@ -27,7 +27,6 @@ if __name__ == "__main__":
     public_dir = join(root_dir, public_dirname)
 
     img_dirname = "img/"
-    img_dir_relative = join(public_dirname, img_dirname)
     img_dir = join(public_dir, "img/")
 
     events_json = join(public_dir, "events.json")
@@ -64,7 +63,7 @@ if __name__ == "__main__":
     if scrape:
         events_to_json(events, events_json)
     events_to_ics(events, public_dir)
-    events_to_html(events, public_dir, img_dir_relative)
+    events_to_html(events, public_dir, img_dir, img_dirname)
     cleanup_images(events, img_dir)
 
     if update:
