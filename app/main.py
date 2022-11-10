@@ -1,6 +1,6 @@
 # Built-in imports
-from sys import argv
-from os import makedirs
+from sys import argv, executable
+from os import makedirs, getenv, execv
 from os.path import realpath, join, abspath, dirname
 from json import dump, load
 
@@ -8,7 +8,7 @@ from json import dump, load
 from dotenv import load_dotenv
 
 # Local imports
-from repo import clone_repo_if_not_exists, update_repo
+from repo import clone_repo_if_not_exists, update_repo, pull_update_if_needed
 from Event import load_events_from_json, events_to_json
 from scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
 from scrape_and_parse.driver import setup_driver
@@ -39,6 +39,13 @@ if __name__ == "__main__":
 
     load_dotenv(env_file)
     pages = read_pages_from_env()
+
+    # See https://stackoverflow.com/questions/11329917/restart-python-script-from-within-itself#comment117287118_11329970 & https://docs.python.org/3/library/os.html#os.execv
+    if getenv("autopull"):
+        updated = pull_update_if_needed(root_dir)
+        if updated:
+            execv(executable, argv)
+
 
     
     # Clone repo into public/

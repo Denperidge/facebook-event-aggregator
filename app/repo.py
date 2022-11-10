@@ -47,3 +47,14 @@ def update_repo(dir, commit_msg=None):
         )
 
 
+# Thanks to https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git#comment20583319_12791408
+# & https://stackoverflow.com/a/17938274
+def pull_update_if_needed(dir):
+    git_command(dir, "fetch")
+    fetch = int(run("git rev-list HEAD...@{u} --count", encoding="UTF-8").stdout)
+    if fetch == 0:
+        return False
+    else:
+        git_command(dir, "pull")
+        return True
+        
