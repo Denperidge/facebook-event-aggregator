@@ -2,6 +2,7 @@
 from sys import argv, executable
 from os import makedirs, getenv, execv
 from os.path import realpath, join, abspath, dirname
+from pathlib import Path
 from json import dump, load
 
 # Package imports
@@ -44,7 +45,8 @@ if __name__ == "__main__":
     if getenv("autopull"):
         updated = pull_update_if_needed(root_dir)
         if updated:
-            execv(executable, argv)
+            python_exec_name = Path(executable)  # No ext nor path
+            execv(executable, [python_exec_name] + argv)
 
 
     
