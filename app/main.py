@@ -42,7 +42,7 @@ if __name__ == "__main__":
     pages = read_pages_from_env()
 
     # See https://stackoverflow.com/questions/11329917/restart-python-script-from-within-itself#comment117287118_11329970 & https://docs.python.org/3/library/os.html#os.execv
-    if getenv("autopull"):
+    if getenv("auto_pull"):
         updated = pull_update_if_needed(root_dir)
         if updated:
             python_exec_name = Path(executable)  # No ext nor path
