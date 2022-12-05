@@ -5,4 +5,4 @@ selenium==4.5.0
 webdriver_manager==3.8.4
 packaging==21.3
 Jinja2==3.1.2
-python-slugify==6.1.2
+python-slugify==7.0.0
