@@ -51,7 +51,7 @@ def update_repo(dir, commit_msg=None):
 # & https://stackoverflow.com/a/17938274
 def pull_update_if_needed(dir):
     git_command(dir, "fetch")
-    fetch = int(run("git rev-list HEAD...@{u} --count", encoding="UTF-8", capture_output=True, shell=True).stdout)
+    fetch = int(run("git rev-list HEAD...@{u} --count", cwd=dir, encoding="UTF-8", capture_output=True, shell=True).stdout)
     if fetch == 0:
         return False
     else:
