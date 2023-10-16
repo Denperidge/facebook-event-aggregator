@@ -12,7 +12,7 @@ from dateutil import parser
 from slugify import slugify
 
 # Local imports
-from scrape_and_parse.locale import facebook_locale_to_www
+from .utils.url_converter import facebook_locale_to_www
 
 class Event(object):
     """
@@ -22,13 +22,13 @@ class Event(object):
     """
 
 
-    def __init__(self, name, datetime, source, location, url):
+    def __init__(self, name: str, datetime: str, source: str, location: str , url: str):
         self.name = name
         # Replacement due to bug ? https://github.com/dateutil/dateutil/issues/70#issuecomment-945080282
         self.datetime = parser.parse(datetime.replace("UTC", ""))
         self.location = location
         self.url = url
-        self.source = source
+        self.source: str = source
     
     # Thanks to https://stackoverflow.com/a/682545 & https://www.programiz.com/python-programming/methods/built-in/classmethod
     @classmethod
@@ -102,6 +102,7 @@ class Event(object):
         except IndexError:
             print("No image found for " + self.uid)
             return None
+    
         
         
 
