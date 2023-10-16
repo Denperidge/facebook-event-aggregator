@@ -6,6 +6,8 @@ from getpass import getpass
 # Package imports
 from selenium.webdriver.common.by import By
 
+"""NOTE: currently unimplemented"""
+
 def handle_fb_login(driver, headless):
     # If an email is provided, log into Facebook
     logged_in = False

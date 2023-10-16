@@ -1,6 +1,7 @@
 # Built-in imports
 import re
-# These functions are for parsing the scraping :tm:
+
+""" Regexes to parse input from Facebook """
 
 """
 Example:

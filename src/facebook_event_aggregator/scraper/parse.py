@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
 # Local imports
-from .regex import find_and_remove, regex_in, re_line_with_characters, re_guests, re_three_letter_two_digit_date, re_utc_time, re_utc_and_more
+from ..utils.fb_regexes import find_and_remove, regex_in, re_line_with_characters, re_guests, re_three_letter_two_digit_date, re_utc_time, re_utc_and_more
 from Event import Event
 from scrape_and_parse.driver import setup_driver
 from scrape_and_parse.locale import facebook_www_to_locale

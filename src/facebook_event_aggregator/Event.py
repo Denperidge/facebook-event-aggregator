@@ -1,3 +1,5 @@
+"""An Event """
+
 # Built-in imports
 from copy import deepcopy
 from json import load, dump

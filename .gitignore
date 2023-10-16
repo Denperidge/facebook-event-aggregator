@@ -3,3 +3,4 @@ node_modules
 public/
 __pycache__
 geckodriver.log
+.pytest_cache
