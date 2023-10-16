@@ -46,7 +46,7 @@ Example:
 re_utc_and_more = r"UTC\+\d* AND \d{1,} MORE"
 
 def regex_in(data, pattern):
-    return re.search(pattern, data)
+    return bool(re.search(pattern, data))
 
 def find_and_remove(data, pattern):
     try:
