@@ -46,11 +46,8 @@ class Event(object):
         serializable_event = deepcopy(self)
         serializable_event.datetime = self.datetime.isoformat()
         return serializable_event.__dict__
-    
-    @property
-    def description(self):
-        return "Organized by {0}. See {1} for more info".format(self.source, self.clean_url)
-    
+
+
     @property
     def clean_url(self):
         url = facebook_locale_to_www(self.url)
@@ -58,6 +55,11 @@ class Event(object):
             url = url[:url.index("?")]
         return url
     
+    @property
+    def description(self):
+        return "Organized by {0}. See {1} for more info".format(self.source, self.clean_url)
+    
+
     # Thanks to https://www.geeksforgeeks.org/getter-and-setter-in-python/
     @property
     def uid(self):
