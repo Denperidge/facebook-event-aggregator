@@ -1,33 +1,22 @@
 # Built-in imports
 from subprocess import run
-from os.path import realpath, isdir, join
+from os.path import realpath, isdir, join, exists
 from datetime import datetime
 
-"""
-This module handles Git repo initialisating
+from git import Repo 
 
-
-GitPython is not used because:
-- It still requires an active Git installation
-- Currently in maintenance mode
-- The git commands needed in this are very basic
-"""
-
-# Commands meant for internal use
-def _git_command(dir, *commands):
-    for command in commands:
-        run("git {}".format(command), cwd=dir, shell=True)
+"""This module handles Git repo stuff"""
 
 def _normalize_path(dir):
     return realpath(dir)
 
-# Commands meant for external use
-def clone_repo_if_not_exists(parent_dir_path: str, dest_dirname: str, repo_url: str):
-    dest_dirname = _normalize_path(join(parent_dir_path, dest_dirname))
+def clone_or_pull_repo(parent_dir_path: str, dest_path: str, repo_url: str):
+    dest_path = _normalize_path(join(parent_dir_path, dest_path))
 
-    if not isdir(dest_dirname):
-        _git_command(parent_dir_path, "clone {0} {1}".format(repo_url, dest_dirname))
-
+    if not exists(dest_path):
+        return Repo.clone_from(repo_url, dest_path)
+    else:
+        return Repo(dest_path).remote("origin").pull()
         
     
 def update_repo(dir, commit_msg=None):
@@ -38,12 +27,10 @@ def update_repo(dir, commit_msg=None):
     
     print(commit_msg)
 
-    _git_command(dir,
-        "pull",
-        "add .", 
-        "commit -m \"{}\"".format(commit_msg),
-        "push origin main"
-        )
+    
+    repo.index.add(".")
+    repo.index.commit()
+    repo.remote("origin").push()
 
 
 # Thanks to https://stackoverflow.com/questions/3258243/check-if-pull-needed-in-git#comment20583319_12791408

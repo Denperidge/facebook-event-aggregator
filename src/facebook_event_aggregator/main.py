@@ -9,7 +9,7 @@ from json import dump, load
 from dotenv import load_dotenv
 
 # Local imports
-from repo import clone_repo_if_not_exists, update_repo, pull_update_if_needed
+from repo import clone_or_pull_repo, update_repo, pull_update_if_needed
 from Event import load_events_from_json, events_to_json
 from scrape_and_parse.scrape_and_parse import read_pages_from_env, scrape_events
 from scrape_and_parse.driver import setup_driver
@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     
     # Clone repo into public/
-    clone_repo_if_not_exists(parent_dir_path=root_dir, dest_dirname=public_dirname)
+    clone_or_pull_repo(parent_dir_path=root_dir, dest_path=public_dirname)
 
     if scrape:
         # Prepare img_dir in case it's needed
