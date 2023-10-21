@@ -1,0 +1,23 @@
+[project]
+name = ""
+version = "0.0.0"
+authors = [
+    { name="Denperidge", email="denperidge@gmail.com" },
+]
+description = ""
+readme = "README.md"
+requires-python = ">=3.6"
+dependencies = []
+classifiers = [
+]
+
+[project.urls]
+"Homepage" = ""
+"Bug Tracker" = ""
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+addopts = "--cov"
