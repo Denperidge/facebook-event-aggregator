@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     
     # Clone repo into public/
-    clone_repo_if_not_exists(parent_dir=root_dir, dest_dirname=public_dirname)
+    clone_repo_if_not_exists(parent_dir_path=root_dir, dest_dirname=public_dirname)
 
     if scrape:
         # Prepare img_dir in case it's needed
