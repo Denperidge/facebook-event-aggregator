@@ -63,6 +63,6 @@ class TestEventClass():
         self.compare_to_original(Event.from_dict(self.event.to_json()))
     
     
-   <#def test_events_from_json(self, tmp_path: Path):
+    #def test_events_from_json(self, tmp_path: Path):
      #   with open(tmp_path.joinpath("data.json"), "w", encoding="UTF-8") as file:
       #      file.write(f"{"",}")

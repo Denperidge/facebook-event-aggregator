@@ -2,7 +2,7 @@ install:
 	pip install -r requirements.txt
 
 install-test:
-	pip install -r requirements.txt requirements-test.txt
+	pip install -r requirements.txt -r requirements-test.txt
 
 test:
 	pytest
