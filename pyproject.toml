@@ -21,3 +21,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
 addopts = "--cov=src/facebook_event_aggregator"
+
+[tool.coverage.report]
+omit = [
+    "driver.py",  # selenium doesn't export options, and the other code is platform dependant
+]

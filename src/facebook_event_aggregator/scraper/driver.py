@@ -9,7 +9,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 #from pyvirtualdisplay import Display
 
 # Setup Driver
-def setup_driver(headless=False):
+def setup_driver(headless=False, is_linux_armv7l=(system() == "Linux" and machine() == "armv7l")) -> webdriver.Chrome:
     options = Options()
 
     if (headless):
@@ -29,8 +29,7 @@ def setup_driver(headless=False):
             #print(opt)
     
     # Much thanks to https://stackoverflow.com/a/71042821
-    raspberry_pi = system() == "Linux" and machine() == "armv7l"
-    if not raspberry_pi:
+    if not is_linux_armv7l:
         service = Service(ChromeDriverManager().install())
     else:
         #display = Display(visible=0, size=(1920,1200))
