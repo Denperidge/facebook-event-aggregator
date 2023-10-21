@@ -89,7 +89,7 @@ class Event(object):
 
    
     """
-    def get_image(self, image_dir, return_with_path=None):
+    def get_image_filename(self, image_dir, return_with_path=None):
         try:
             image_glob_str = join(image_dir, self.uid + "*")
             filename_no_path = basename(glob(image_glob_str)[0])
