@@ -10,11 +10,10 @@ from ics import Calendar, Event as IcsEvent
 from slugify import slugify
 
 # Local imports
-from repo import update_repo
-from Event import load_events_from_json
-from export.to_html import slugify
+from ..repo import update_repo
+from ..Event import load_events_from_json
 
-def read_ics_if_exists(ics_path):
+def _read_ics_if_exists(ics_path):
     if exists(ics_path):
         with open(ics_path, "r") as file:
             ics_text = file.read()
@@ -27,13 +26,13 @@ def events_to_ics(events: list, output_dir: str):
     makedirs(output_dir, exist_ok=True)
     ics_all = join(output_dir, "all.ics")
 
-    all_calendar = read_ics_if_exists(ics_all)
+    all_calendar = _read_ics_if_exists(ics_all)
     source_calendars = dict()
 
     sources = set([event.source for event in events])
     for source in sources:
         source_ics = join(output_dir, slugify(source) + ".ics")
-        source_calendars[source] = read_ics_if_exists(source_ics)
+        source_calendars[source] = _read_ics_if_exists(source_ics)
     
 
     for event in events:
@@ -62,16 +61,3 @@ def events_to_ics(events: list, output_dir: str):
         with open(dest, "w") as file:
             file.writelines(calendar.serialize_iter())
 
-
-# For testing:
-# - python to_ics.py path/to/events.json
-if __name__ == "__main__":
-    events_json = realpath(argv[1])
-    dir = dirname(events_json)
-
-    events = load_events_from_json(events_json)
-
-
-    events_to_ics(events, dir)
-
-    update_repo(dir)

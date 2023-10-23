@@ -4,7 +4,7 @@ from pathlib import Path
 from src.facebook_event_aggregator.Event import Event
 from src.facebook_event_aggregator.export.to_html import events_to_html
 
-from .helpers import example
+from .helpers import example, check_event_contents_in
 
 def test_events_to_html(tmp_path: Path):
     events_to_html(
@@ -26,9 +26,6 @@ def test_events_to_html(tmp_path: Path):
                     if not isinstance(value, Event):
                         assert value in data
                     else:
-                        for property in [value.name, value.description, value.location, value.clean_url]:
-                            assert property in data
-                        
-            
+                        check_event_contents_in(value, data)
             else:
                 assert item in data
