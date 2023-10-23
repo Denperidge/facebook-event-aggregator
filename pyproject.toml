@@ -20,7 +20,7 @@ requires = ["setuptools>=68.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
-addopts = "--cov=src/facebook_event_aggregator"
+addopts = "--cov=src/facebook_event_aggregator --cov-report term-missing"
 
 [tool.coverage.report]
 omit = [
