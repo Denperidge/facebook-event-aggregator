@@ -22,7 +22,7 @@ def read_ics_if_exists(ics_path):
     else:
         return Calendar()
 
-def events_to_ics(events, output_dir):
+def events_to_ics(events: list, output_dir: str):
     output_dir = join(realpath(output_dir), "ical/")
     makedirs(output_dir, exist_ok=True)
     ics_all = join(output_dir, "all.ics")
