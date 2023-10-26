@@ -1,19 +1,29 @@
 [project]
-name = ""
-version = "0.0.0"
+name = "facebook_event_aggregator"
+version = "0.1.0"
 authors = [
     { name="Denperidge", email="denperidge@gmail.com" },
 ]
 description = ""
 readme = "README.md"
-requires-python = ">=3.6"
-dependencies = []
+requires-python = ">=3.10"
+dependencies = [
+    "python-slugify >= 7.0.0",
+    "python_dateutil >= 2.8.2",
+    "gitpython >= 3.1.40",
+    "webdriver_manager >= 4.0.1",
+    "selenium >= 4.14.0",
+    "ics >= 0.7.2",
+    "Jinja2 >= 3.1.2",
+]
 classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
 ]
 
 [project.urls]
-"Homepage" = ""
-"Bug Tracker" = ""
+"Homepage" = "https://github.com/Denperidge/facebook-event-aggregator"
+"Bug Tracker" = "https://github.com/Denperidge/facebook-event-aggregator/issues"
 
 [build-system]
 requires = ["setuptools>=68.0"]
