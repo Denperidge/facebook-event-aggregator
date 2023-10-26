@@ -5,9 +5,10 @@ from copy import deepcopy
 from json import load, dump
 from os.path import join, basename
 from glob import glob
+from re import match, RegexFlag
 
 # Package imports
-from datetime import timedelta
+from datetime import timedelta, datetime
 from dateutil import parser
 from slugify import slugify
 
@@ -22,10 +23,15 @@ class Event(object):
     """
 
 
-    def __init__(self, name: str, datetime: str, source: str, location: str , url: str):
+    def __init__(self, name: str, datetime_param: str, source: str, location: str , url: str):
         self.name = name
         # Replacement due to bug ? https://github.com/dateutil/dateutil/issues/70#issuecomment-945080282
-        self.datetime = parser.parse(datetime.replace("UTC", ""))
+        try:
+            # TODO better replacer using regex
+            self.datetime = parser.parse(datetime_param.replace("UTC", "").replace(",", "").replace("MON", "").replace("TUES", "").replace("WED", "").replace("THURS", "").replace("FRI", "").replace("SAT", "").replace("SUN", ""))
+        except parser.ParserError:
+            print("Couldn't parse " + datetime_param)
+            self.datetime = datetime.now()
         self.location = location
         self.url = url
         self.source: str = source
@@ -35,7 +41,7 @@ class Event(object):
     def from_dict(cls, dict):
         return cls(
             name=dict["name"], 
-            datetime=dict["datetime"],
+            datetime_param=dict["datetime"],
             source=dict["source"],
             location=dict["location"],
             url=dict["url"]

@@ -13,7 +13,7 @@ class TestEventClass():
     """Test helpers"""
     event = Event(
         name="Test",
-        datetime="20 Nov 2023 18:00 UTC+1",
+        datetime_param="20 Nov 2023 18:00 UTC+1",
         source="Organisation",
         location="Belgium",
         url="https://en-gb.facebook.com/test"
