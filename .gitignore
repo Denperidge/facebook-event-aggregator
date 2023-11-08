@@ -6,3 +6,6 @@ geckodriver.log
 .pytest_cache
 
 .coverage
+
+*.egg-info
+dist/
