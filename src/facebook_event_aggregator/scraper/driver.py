@@ -6,7 +6,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-#from pyvirtualdisplay import Display
 
 # Setup Driver
 def setup_driver(headless=False, is_linux_armv7l=(system() == "Linux" and machine() == "armv7l")) -> webdriver.Chrome:
@@ -29,14 +28,19 @@ def setup_driver(headless=False, is_linux_armv7l=(system() == "Linux" and machin
             #print(opt)
     
     # Much thanks to https://stackoverflow.com/a/71042821
-    if not is_linux_armv7l:
-        service = Service(ChromeDriverManager().install())
-    else:
-        #display = Display(visible=0, size=(1920,1200))
-        #display.start()
-        raspbian_chromium = "/usr/lib/chromium-browser/chromedriver"
-        service = Service(raspbian_chromium)
-        #options.binary_location = raspbian_chromium
+    try:
+        if not is_linux_armv7l:
+            service = Service(ChromeDriverManager().install())
+        else:
+            #display = Display(visible=0, size=(1920,1200))
+            #display.start()
+            raspbian_chromium = "/usr/lib/chromium-browser/chromedriver"
+            service = Service(raspbian_chromium)
+            #options.binary_location = raspbian_chromium
+    except:
+        # Attempt selenium fallback
+        service = Service()
+                
 
     return webdriver.Chrome(service=service, options=options)
 
