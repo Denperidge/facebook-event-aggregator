@@ -27,7 +27,7 @@ from .scrape_event_page import scrape_event_page
 from time import sleep
 
 def scrape_events_page(driver, event_url, img_dir) -> list[Event]:
-    driver.get(event_url)
+    driver.get(facebook_www_to_locale(event_url))
     sleep(20)
     source = driver.find_element(By.XPATH, "//h1").text.strip()
     event_container = driver.find_element(By.XPATH, """//div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div/div/div/div/div/div[3]""")

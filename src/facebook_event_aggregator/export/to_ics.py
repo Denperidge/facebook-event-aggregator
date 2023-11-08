@@ -15,7 +15,7 @@ from ..Event import load_events_from_json
 
 def _read_ics_if_exists(ics_path):
     if exists(ics_path):
-        with open(ics_path, "r") as file:
+        with open(ics_path, "r", encoding="UTF-8") as file:
             ics_text = file.read()
         return Calendar(ics_text)
     else:
@@ -51,13 +51,13 @@ def events_to_ics(events: list, output_dir: str):
         source_calendars[event.source].events.add(ics_event)
         
 
-    with open(ics_all, "w") as file:
+    with open(ics_all, "w" , encoding="UTF-8") as file:
         file.writelines(all_calendar.serialize_iter())
     
     for source in source_calendars:
         dest = join(output_dir, slugify(source) + ".ics")
         calendar = source_calendars[source]
 
-        with open(dest, "w") as file:
+        with open(dest, "w", encoding="UTF-8") as file:
             file.writelines(calendar.serialize_iter())
 

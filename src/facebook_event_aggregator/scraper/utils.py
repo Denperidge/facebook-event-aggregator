@@ -1,3 +1,6 @@
+from os.path import join
+from urllib.request import urlretrieve 
+
 def read_pages_from_env(replace_locale=True):
     """ LOADING & PARSING PAGES FROM .ENV """
     raw_pages = loads(getenv("pages"))
@@ -23,7 +26,6 @@ def read_pages_from_env(replace_locale=True):
 
 
 def save_image(event, image_url, img_dir):
-    return
     if ".png" in image_url:
         ext = ".png"
     else:
