@@ -21,7 +21,7 @@ def events_page_tester(tmp_path: Path, func, events_as_list:bool=False):
     events_page = "file://" + abspath(join(dirname(__file__).replace("\\", "/"), "events_page.htm"))
     if events_as_list:
         events_page = [events_page]
-    events = func(setup_driver(), events_page, str(tmp_path))
+    events = func(setup_driver(headless=True), events_page, str(tmp_path))
     
     things_to_find = [
         {
