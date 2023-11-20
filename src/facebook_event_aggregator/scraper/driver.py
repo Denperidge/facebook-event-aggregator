@@ -13,14 +13,14 @@ def setup_driver(headless=False, is_linux_armv7l=(system() == "Linux" and machin
 
     if (headless):
         headless_opts = [
-            "--headless",
+            "--headless=new",
             "--disable-gpu",
             "--window-size=1920,1200",
-            "---ignore-certificate-errors",
-            "--disable-extensions",
+            #"---ignore-certificate-errors",
+            #"--disable-extensions",
             #"--no-sandbox",
             #"--disable-dev-shm-usage",
-            "--remote-debugging-port=9515",
+            "--remote-debugging-port=9223",
             #"--disable-setuid-sandbox"
         ]
         for opt in headless_opts:
