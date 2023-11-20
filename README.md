@@ -10,7 +10,12 @@ If you're looking for the original script-based version, check out the [archive-
 ### Prerequisites
 Prerequisites: >= py3.10, pip, git
 
-If running on a platform without an official Chromium distrubition (e.g. Raspberry Pi 3b, Linux32...): `apt-get install chromium-chromedriver`
+### Installing prerequisites
+- If running on a distro supporting rpm/yum, use
+    - `yum install google-chrome` (keep note of what version is installed)
+    - `cd /usr/local/bin/`
+    - `npx @puppeteer/browsers install chromedriver@121` (ensure the @VERSION is the same major version as yum installed)
+- If running on a platform without an official Chromium distrubition (e.g. Raspberry Pi 3b, Linux32...): `apt-get install chromium-chromedriver`
 
 ### Run locally
 ```bash
