@@ -80,6 +80,5 @@ jobs:
           uses: docker/build-push-action@v5
           with:
             context: .
-            load: true
             push: true
             tags: ${{ secrets.DOCKERHUB_USERNAME }}/facebook-event-aggregator:${{github.ref_name}}
