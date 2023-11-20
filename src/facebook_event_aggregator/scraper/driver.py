@@ -20,7 +20,7 @@ def setup_driver(headless=False, is_linux_armv7l=(system() == "Linux" and machin
             "--disable-extensions",
             #"--no-sandbox",
             #"--disable-dev-shm-usage",
-            #"--remote-debugging-port=9515",
+            "--remote-debugging-port=9515",
             #"--disable-setuid-sandbox"
         ]
         for opt in headless_opts:
