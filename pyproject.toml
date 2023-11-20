@@ -1,6 +1,6 @@
 [project]
 name = "facebook_event_aggregator"
-version = "0.1.4"
+version = "0.1.5"
 authors = [
     { name="Denperidge", email="denperidge@gmail.com" },
 ]
@@ -34,10 +34,10 @@ requires = ["setuptools>=68.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = ["src/facebook_event_aggregator"]
+where = ["src"]
 
 [tool.setuptools.package-data]
-"htmlexport" = ["*.html", "*.css", "*.js"]
+htmlexport = ["*.html", "*.css", "*.js"]
 
 [tool.pytest.ini_options]
 addopts = "--cov=src/facebook_event_aggregator --cov-report term-missing"

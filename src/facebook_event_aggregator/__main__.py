@@ -45,7 +45,7 @@ if __name__ == "__main__":
     #headless = "headless" in startup_args
     #update = "update" in startup_args
     #scrape = "noscrape" not in startup_args
-    scrape = True
+    scrape = args.scrape
     headless = True
 
     
