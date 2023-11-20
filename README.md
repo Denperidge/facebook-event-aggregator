@@ -26,6 +26,8 @@ echo "Optionally, add the following line to crontab to automatically run every 2
 ```
 See also [crontab guru](https://crontab.guru/)!
 
+docker run -i facebook-event-aggregator --host-domain ...
+
 ### Run tests
 ```bash
 git clone https://github.com/Denperidge/facebook-event-aggregator.git
