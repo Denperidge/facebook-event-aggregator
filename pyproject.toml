@@ -1,6 +1,6 @@
 [project]
 name = "facebook_event_aggregator"
-version = "0.1.7"
+version = "0.1.8"
 authors = [
     { name="Denperidge", email="denperidge@gmail.com" },
 ]
