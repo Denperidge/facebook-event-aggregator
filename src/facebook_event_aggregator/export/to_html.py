@@ -8,18 +8,20 @@ from datetime import datetime
 
 # Package imports
 from dateutil import parser
-from jinja2 import FileSystemLoader, Environment, PrefixLoader, PackageLoader
+from jinja2 import FileSystemLoader, Environment, PrefixLoader, PackageLoader, DictLoader
 from slugify import slugify
 
 # Local imports
 from ..Event import load_events_from_json
+from .templates.workaround import templates
 
 
 try:
-    loader = PackageLoader("htmlexport")
-except:
+    #loader = PackageLoader("htmlexport")
     template_dir = join(realpath(dirname(__file__)), "templates")
     loader = FileSystemLoader(template_dir)
+except:
+    loader = DictLoader(templates)
 
 jinja_env = Environment(
     loader=loader,
