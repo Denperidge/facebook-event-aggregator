@@ -37,6 +37,6 @@ def update_repo(parent_dir_path, clone_dirname, commit_msg=None):
     
     repo = Repo(repo_path)
     
-    repo.index.add("-A")
+    repo.git.add(all=True)
     repo.index.commit(commit_msg)
     repo.remote("origin").push()
