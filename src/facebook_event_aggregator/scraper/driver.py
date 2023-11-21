@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Setup Driver
-def setup_driver(headless=False, remote_debugging_port = 0, extra_opts: list[str] = [], is_linux_armv7l=(system() == "Linux" and machine() == "armv7l")) -> webdriver.Chrome:
+def setup_driver(chromedriver_path: str=None, headless=False, remote_debugging_port = 0, extra_opts: list[str] = []) -> webdriver.Chrome:
     options = Options()
 
     if (headless):
@@ -31,13 +31,12 @@ def setup_driver(headless=False, remote_debugging_port = 0, extra_opts: list[str
     
     # Much thanks to https://stackoverflow.com/a/71042821
     try:
-        if not is_linux_armv7l:
+        if not chromedriver_path:
             service = Service(ChromeDriverManager().install())
         else:
             #display = Display(visible=0, size=(1920,1200))
             #display.start()
-            raspbian_chromium = "/usr/lib/chromium-browser/chromedriver"
-            service = Service(raspbian_chromium)
+            service = Service(chromedriver_path)
             #options.binary_location = raspbian_chromium
     except:
         # Attempt selenium fallback

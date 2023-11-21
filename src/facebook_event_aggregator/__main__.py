@@ -18,6 +18,7 @@ argparse = ArgumentParser()
 argparse.add_argument("--target", "-t", nargs="+", help="Facebook page to extract from. Usage: --target https://www.facebook.com/trixonline/ --target https://www.facebook.com/botaniquebxl/")
 argparse.add_argument("--update", "-u", action="store_true", help="Whether to push to Git")
 argparse.add_argument("--scrape", "-s", action="store_true", help="Whether to run scraper (alternatively, load from cache)")
+argparse.add_argument("--chromedriver-path", "--cp", default=None, help="Path to chromedriver. For example, using chromium-chromedriver, this would be /usr/lib/chromium-browser/chromedriver")
 
 argparse.add_argument("--host-domain", "--hd", required=True, help="Domain where your files will be hosted. E.g. https://example.com")
 argparse.add_argument("--timezone", "--tz", default="Europe/London", help="What timezone to use for ics events")
@@ -59,7 +60,7 @@ if __name__ == "__main__":
         # Prepare img_dir in case it's needed
 
         # Setup Selenium scraper
-        driver = setup_driver(headless, args.remote_debugging_port, extra_opts=args.extra_opts)
+        driver = setup_driver(args.chromedriver_path, headless, args.remote_debugging_port, extra_opts=args.extra_opts)
 
         # Scrape events
         events = scrape_all(driver, args.target, str(img_dir))
