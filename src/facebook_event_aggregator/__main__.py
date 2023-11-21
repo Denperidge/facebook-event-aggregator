@@ -19,13 +19,14 @@ argparse.add_argument("--target", "-t", nargs="+", help="Facebook page to extrac
 argparse.add_argument("--update", "-u", action="store_true", help="Whether to push to Git")
 argparse.add_argument("--scrape", "-s", action="store_true", help="Whether to run scraper (alternatively, load from cache)")
 
-argparse.add_argument("--host-domain", "-hd", required=True, help="Domain where your files will be hosted. E.g. https://example.com")
-argparse.add_argument("--timezone", "-tz", default="Europe/London", help="What timezone to use for ics events")
+argparse.add_argument("--host-domain", "--hd", required=True, help="Domain where your files will be hosted. E.g. https://example.com")
+argparse.add_argument("--timezone", "--tz", default="Europe/London", help="What timezone to use for ics events")
 argparse.add_argument("--title", default="Title", help="What title to use for the html export")
 
 argparse.add_argument("--repo", "--repo-url", required=True, help="Domain where your files will be hosted. E.g. https://example.com")
 
-argparse.add_argument("--remote-debugging-port", "-rdp", default=0, help="(Troubleshooting) Set Chrome debugging port. Default value: 0")
+argparse.add_argument("--remote-debugging-port", "--rdp", default=0, help="(Troubleshooting) Set Chrome debugging port. Default value: 0")
+argparse.add_argument("--extra-opts", "--eo", default=[], nargs="*", help="(Troubleshooting) Set Selenium args. Default value: []")
 
 
 if __name__ == "__main__":
@@ -58,7 +59,7 @@ if __name__ == "__main__":
         # Prepare img_dir in case it's needed
 
         # Setup Selenium scraper
-        driver = setup_driver(headless, args.remote_debugging_port)
+        driver = setup_driver(headless, args.remote_debugging_port, extra_opts=args.extra_opts)
 
         # Scrape events
         events = scrape_all(driver, args.target, str(img_dir))

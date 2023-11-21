@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Setup Driver
-def setup_driver(headless=False, remote_debugging_port = 0, is_linux_armv7l=(system() == "Linux" and machine() == "armv7l")) -> webdriver.Chrome:
+def setup_driver(headless=False, remote_debugging_port = 0, extra_opts: list[str] = [], is_linux_armv7l=(system() == "Linux" and machine() == "armv7l")) -> webdriver.Chrome:
     options = Options()
 
     if (headless):
@@ -26,6 +26,8 @@ def setup_driver(headless=False, remote_debugging_port = 0, is_linux_armv7l=(sys
         for opt in headless_opts:
             options.add_argument(opt)
             #print(opt)
+        for opt in extra_opts:
+            options.add_argument(opt)
     
     # Much thanks to https://stackoverflow.com/a/71042821
     try:
