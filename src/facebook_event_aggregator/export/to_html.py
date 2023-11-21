@@ -16,12 +16,12 @@ from ..Event import load_events_from_json
 from .templates.workaround import templates
 
 
-try:
+#try:
     #loader = PackageLoader("htmlexport")
-    template_dir = join(realpath(dirname(__file__)), "templates")
-    loader = FileSystemLoader(template_dir)
-except:
-    loader = DictLoader(templates)
+  #  template_dir = join(realpath(dirname(__file__)), "templates")
+ #   loader = FileSystemLoader(template_dir)
+#except:
+loader = DictLoader(templates)
 
 jinja_env = Environment(
     loader=loader,
