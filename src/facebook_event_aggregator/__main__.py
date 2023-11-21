@@ -25,6 +25,7 @@ argparse.add_argument("--title", default="Title", help="What title to use for th
 
 argparse.add_argument("--repo", "--repo-url", required=True, help="Domain where your files will be hosted. E.g. https://example.com")
 
+argparse.add_argument("--remote-debugging-port", "-rdp", default=0, help="(Troubleshooting) Set Chrome debugging port. Default value: 0")
 
 
 if __name__ == "__main__":
@@ -57,7 +58,7 @@ if __name__ == "__main__":
         # Prepare img_dir in case it's needed
 
         # Setup Selenium scraper
-        driver = setup_driver(headless)
+        driver = setup_driver(headless, args.remote_debugging_port)
 
         # Scrape events
         events = scrape_all(driver, args.target, str(img_dir))

@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Setup Driver
-def setup_driver(headless=False, is_linux_armv7l=(system() == "Linux" and machine() == "armv7l")) -> webdriver.Chrome:
+def setup_driver(headless=False, remote_debugging_port = 0, is_linux_armv7l=(system() == "Linux" and machine() == "armv7l")) -> webdriver.Chrome:
     options = Options()
 
     if (headless):
@@ -20,7 +20,7 @@ def setup_driver(headless=False, is_linux_armv7l=(system() == "Linux" and machin
             "--disable-extensions",
             #"--no-sandbox",
             #"--disable-dev-shm-usage",
-            "--remote-debugging-port=0",
+            "--remote-debugging-port=" + remote_debugging_port,
             #"--disable-setuid-sandbox"
         ]
         for opt in headless_opts:
