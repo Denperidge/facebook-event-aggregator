@@ -27,7 +27,7 @@ def setup_driver(headless=False, remote_debugging_port = 0, extra_opts: list[str
             options.add_argument(opt)
             #print(opt)
         for opt in extra_opts:
-            options.add_argument(opt)
+            options.add_argument("--" + opt)
     
     # Much thanks to https://stackoverflow.com/a/71042821
     try:
