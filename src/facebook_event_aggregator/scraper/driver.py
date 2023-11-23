@@ -3,9 +3,9 @@ from platform import system, machine
 
 # Package imports
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
+from webdriver_manager.firefox import GeckoDriverManager
 
 # Setup Driver
 def setup_driver(chromedriver_path: str=None, headless=False, remote_debugging_port = 0, extra_opts: list[str] = []) -> webdriver.Chrome:
@@ -13,14 +13,14 @@ def setup_driver(chromedriver_path: str=None, headless=False, remote_debugging_p
 
     if (headless):
         headless_opts = [
-            "--headless=new",
+            "--headless",
             "--disable-gpu",
             "--window-size=1920,1200",
             "--ignore-certificate-errors",
-            "--disable-extensions",
+            #"--disable-extensions",
             #"--no-sandbox",
             #"--disable-dev-shm-usage",
-            "--remote-debugging-port=" + str(remote_debugging_port),
+            #"--remote-debugging-port=" + str(remote_debugging_port),
             #"--disable-setuid-sandbox"
         ]
         for opt in headless_opts:
@@ -32,7 +32,7 @@ def setup_driver(chromedriver_path: str=None, headless=False, remote_debugging_p
     # Much thanks to https://stackoverflow.com/a/71042821
     try:
         if not chromedriver_path:
-            service = Service(ChromeDriverManager().install())
+            service = Service(GeckoDriverManager().install())
         else:
             #display = Display(visible=0, size=(1920,1200))
             #display.start()
@@ -43,6 +43,6 @@ def setup_driver(chromedriver_path: str=None, headless=False, remote_debugging_p
         service = Service()
                 
 
-    return webdriver.Chrome(service=service, options=options)
+    return webdriver.Firefox(service=service, options=options)
 
 

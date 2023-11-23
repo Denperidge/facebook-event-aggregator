@@ -1,4 +1,4 @@
-FROM selenium/standalone-chrome:latest
+FROM seleniarm/standalone-firefox:latest
 
 WORKDIR /src/src/app
 
