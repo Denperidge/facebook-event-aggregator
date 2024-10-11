@@ -17,6 +17,9 @@ jobs:
         with:
           python-version: '3.10' 
       
+      - name: Create venv
+        run: make
+      
       - name: Install (test) requirements
         run: make install-test
   
