@@ -32,9 +32,8 @@ def scrape_event_page(event_url):
             if "duration" in info_lower:
                 pass  
             """
-        image_url = tmp_driver.find_element(By.CSS_SELECTOR,'img[data-imgperflogname="profileCoverPhoto"]').get_attribute("src")
-
-        sleep(5)
+                
+        image_url = tmp_driver.find_element(By.CSS_SELECTOR,"img[data-imgperflogname=\"profileCoverPhoto\"]").get_attribute("src")
 
         tmp_driver.quit()
                 
@@ -43,4 +42,4 @@ def scrape_event_page(event_url):
         print("Location could not be fetched")
 
     
-    return location, image_url
+    return (location, image_url)
