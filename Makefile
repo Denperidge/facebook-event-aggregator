@@ -16,3 +16,11 @@ install-test:
 test:
 	.venv/bin/python -m pytest
 	.venv/bin/python -m coverage_badge -fo coverage.svg
+
+.PHONY: docker-build
+docker-build:
+	sudo docker build -t fae . --no-cache
+
+.PHONY: docker-run
+docker-run:
+	sudo docker run --shm-size="2g" fae --host-domain https://concerts.neonpastel.net --repo https://github.com/Denperidge-Friends/belgian-concerts.git --scrape

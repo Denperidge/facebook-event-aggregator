@@ -2,6 +2,6 @@ python-slugify==7.0.0
 python_dateutil==2.8.2
 gitpython==3.1.40
 webdriver_manager==4.0.1
-selenium==4.15.2
+selenium==4.27.1
 ics==0.7.2
 Jinja2==3.1.2

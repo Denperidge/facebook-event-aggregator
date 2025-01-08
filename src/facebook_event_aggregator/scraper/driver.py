@@ -3,22 +3,23 @@ from platform import system, machine
 
 # Package imports
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chromium.service import ChromiumService as Service
+from selenium.webdriver.chromium.options import ChromiumOptions as Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Setup Driver
 def setup_driver(chromedriver_path: str=None, headless=False, remote_debugging_port = 0, extra_opts: list[str] = []) -> webdriver.Chrome:
     options = Options()
 
-    if (headless):
+    #if (headless):
+    if True:  # temp
         headless_opts = [
-            "--headless=new",
+            "--headless",
             "--disable-gpu",
             "--window-size=1920,1200",
             "--ignore-certificate-errors",
             "--disable-extensions",
-            #"--no-sandbox",
+            "--no-sandbox",  # TODO only for docker
             #"--disable-dev-shm-usage",
             "--remote-debugging-port=" + str(remote_debugging_port),
             #"--disable-setuid-sandbox"
@@ -41,8 +42,12 @@ def setup_driver(chromedriver_path: str=None, headless=False, remote_debugging_p
     except:
         # Attempt selenium fallback
         service = Service()
-                
+    
+    try:
+        driver = webdriver.Chrome(service=service, options=options)
+        return driver
+    except Exception as e:
+        raise e
 
-    return webdriver.Chrome(service=service, options=options)
 
 
