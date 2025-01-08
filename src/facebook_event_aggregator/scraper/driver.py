@@ -3,8 +3,8 @@ from platform import system, machine
 
 # Package imports
 from selenium import webdriver
-from selenium.webdriver.chromium.service import ChromiumService as Service
-from selenium.webdriver.chromium.options import ChromiumOptions as Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Setup Driver
