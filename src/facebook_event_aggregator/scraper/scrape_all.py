@@ -25,7 +25,12 @@ def scrape_all(driver, pages: list[str], img_dir: str):
 
     events = []
     for page in pages:
-        driver.get(page)
+        print("Getting", page)
+        try:
+            driver.get(page)
+        except Exception as e:
+            raise e
+            return
         sleep(20)
         try:
             events.extend(scrape_events_page(driver, page, img_dir))

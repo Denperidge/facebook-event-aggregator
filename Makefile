@@ -23,4 +23,4 @@ docker-build:
 
 .PHONY: docker-run
 docker-run:
-	sudo docker run --shm-size="2g" fae --host-domain https://concerts.neonpastel.net --repo https://github.com/Denperidge-Friends/belgian-concerts.git --scrape
+	sudo docker run --shm-size="2g" fae --host-domain https://concerts.neonpastel.net --repo https://github.com/Denperidge-Friends/belgian-concerts.git --scrape --update --target https://www.facebook.com/trixonline/
