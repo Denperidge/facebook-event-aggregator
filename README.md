@@ -24,6 +24,14 @@ Pre-requisites: >= py3.10, pip
 python -m pip install --upgrade facebook-event-aggregator
 ```
 
+#### Install & run using pipx
+Pre-requisites: pipx
+
+> Before running, make sure to follow the [installing chromedriver instructions](#installing-chromedriver)
+
+```bash
+pipx run facebook-event-aggregator --help
+```
 
 #### Install & run using a local clone
 Pre-requisites: >= py3.10, pip, git

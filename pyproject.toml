@@ -1,6 +1,6 @@
 [project]
 name = "facebook_event_aggregator"
-version = "0.1.20"
+version = "0.1.21"
 authors = [
     { name="Denperidge", email="denperidge@gmail.com" },
 ]
@@ -26,8 +26,8 @@ classifiers = [
 "Bug Tracker" = "https://github.com/Denperidge/facebook-event-aggregator/issues"
 
 [project.scripts]
-facebook_event_aggregator = "facebook_event_aggregator:main"
-f_a_e = "facebook_event_aggregator:main"
+facebook_event_aggregator = "facebook_event_aggregator.__main__:cli"
+f_a_e = "facebook_event_aggregator.__main__:cli"
 
 [build-system]
 requires = ["setuptools>=68.0"]

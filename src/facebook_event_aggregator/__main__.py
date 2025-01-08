@@ -29,8 +29,7 @@ argparse.add_argument("--repo", "--repo-url", required=True, help="Domain where 
 argparse.add_argument("--remote-debugging-port", "--rdp", default=0, help="(Troubleshooting) Set Chrome debugging port. Default value: 0")
 argparse.add_argument("--extra-opts", "--eo", default=[], nargs="*", help="(Troubleshooting) Set Selenium args. '--' gets prepended automatically and shouldn't be passed. Default value: []")
 
-
-if __name__ == "__main__":
+def cli():
     args = argparse.parse_args()
     print(args)
 
@@ -92,3 +91,5 @@ if __name__ == "__main__":
     if scrape:
         driver.quit()
             
+if __name__ == "__main__":
+    cli()
